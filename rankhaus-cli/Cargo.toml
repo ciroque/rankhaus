@@ -1,0 +1,29 @@
+[package]
+name = "rankhaus-cli"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "rankhaus"
+path = "src/main.rs"
+
+[dependencies]
+rankhaus = { path = "../rankhaus" }
+clap = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+dialoguer = { workspace = true }
+inquire = { workspace = true }
+
+[features]
+default = ["rankhaus/merge"]
+merge = ["rankhaus/merge"]
+elo = ["rankhaus/elo"]
+tournament = ["rankhaus/tournament"]
+condorcet = ["rankhaus/condorcet"]
+active = ["rankhaus/active"]
+btm = ["rankhaus/btm"]

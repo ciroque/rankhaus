@@ -1,0 +1,223 @@
+use crate::{Error, Item, Ranking, Result, User};
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+use std::path::{Path, PathBuf};
+
+/// Metadata about a ranking list
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ListMeta {
+    pub name: String,
+    #[serde(rename = "type")]
+    pub list_type: String,
+    pub author: String,
+    pub description: String,
+    pub created: DateTime<Utc>,
+}
+
+/// A complete ranking list with items, users, and rankings
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct List {
+    pub meta: ListMeta,
+    pub users: HashMap<String, User>,
+    pub items: HashMap<String, Item>,
+    pub rankings: Vec<Ranking>,
+    
+    #[serde(skip)]
+    pub file_path: Option<PathBuf>,
+}
+
+impl List {
+    /// Create a new empty list
+    pub fn new(name: String, author: String, description: String) -> Self {
+        Self {
+            meta: ListMeta {
+                name,
+                list_type: "list".to_string(),
+                author,
+                description,
+                created: Utc::now(),
+            },
+            users: HashMap::new(),
+            items: HashMap::new(),
+            rankings: Vec::new(),
+            file_path: None,
+        }
+    }
+    
+    /// Load a list from a JSON file
+    pub fn load<P: AsRef<Path>>(path: P) -> Result<Self> {
+        let content = std::fs::read_to_string(&path)?;
+        let mut list: List = serde_json::from_str(&content)?;
+        list.file_path = Some(path.as_ref().to_path_buf());
+        Ok(list)
+    }
+    
+    /// Save the list to its file path
+    pub fn save(&self) -> Result<()> {
+        if let Some(path) = &self.file_path {
+            self.save_to(path)
+        } else {
+            Err(Error::Other("No file path set".to_string()))
+        }
+    }
+    
+    /// Save the list to a specific path
+    pub fn save_to<P: AsRef<Path>>(&self, path: P) -> Result<()> {
+        let content = serde_json::to_string_pretty(self)?;
+        std::fs::write(path, content)?;
+        Ok(())
+    }
+    
+    /// Add a user to the list
+    pub fn add_user(&mut self, user: User) -> Result<()> {
+        let id = user.id.to_string();
+        if self.users.contains_key(&id) {
+            return Err(Error::DuplicateUser(user.username));
+        }
+        self.users.insert(id, user);
+        Ok(())
+    }
+    
+    /// Get a user by ID or username
+    pub fn get_user(&self, identifier: &str) -> Result<&User> {
+        // Try as ID first
+        if let Some(user) = self.users.get(identifier) {
+            return Ok(user);
+        }
+        
+        // Try as username
+        self.users
+            .values()
+            .find(|u| u.username == identifier)
+            .ok_or_else(|| Error::UserNotFound(identifier.to_string()))
+    }
+    
+    /// Get a mutable user by ID or username
+    pub fn get_user_mut(&mut self, identifier: &str) -> Result<&mut User> {
+        // Try as ID first
+        if self.users.contains_key(identifier) {
+            return Ok(self.users.get_mut(identifier).unwrap());
+        }
+        
+        // Try as username
+        let id = self.users
+            .values()
+            .find(|u| u.username == identifier)
+            .map(|u| u.id.to_string())
+            .ok_or_else(|| Error::UserNotFound(identifier.to_string()))?;
+        
+        Ok(self.users.get_mut(&id).unwrap())
+    }
+    
+    /// Remove a user
+    pub fn remove_user(&mut self, identifier: &str, cascade: bool) -> Result<()> {
+        let user = self.get_user(identifier)?;
+        let user_id = user.id.clone();
+        
+        // Check if user has rankings
+        let has_rankings = self.rankings.iter().any(|r| r.user_id == user_id);
+        if has_rankings && !cascade {
+            return Err(Error::UserHasRankings);
+        }
+        
+        // Remove rankings if cascade
+        if cascade {
+            self.rankings.retain(|r| r.user_id != user_id);
+        }
+        
+        // Remove user
+        self.users.remove(&user_id.to_string());
+        Ok(())
+    }
+    
+    /// Add an item to the list
+    pub fn add_item(&mut self, item: Item) -> Result<()> {
+        let id = item.id.to_string();
+        if self.items.contains_key(&id) {
+            return Err(Error::DuplicateItem(item.value));
+        }
+        self.items.insert(id, item);
+        Ok(())
+    }
+    
+    /// Get an item by ID or value
+    pub fn get_item(&self, identifier: &str) -> Result<&Item> {
+        // Try as ID first
+        if let Some(item) = self.items.get(identifier) {
+            return Ok(item);
+        }
+        
+        // Try as value
+        self.items
+            .values()
+            .find(|i| i.value == identifier)
+            .ok_or_else(|| Error::ItemNotFound(identifier.to_string()))
+    }
+    
+    /// Get a mutable item by ID or value
+    pub fn get_item_mut(&mut self, identifier: &str) -> Result<&mut Item> {
+        // Try as ID first
+        if self.items.contains_key(identifier) {
+            return Ok(self.items.get_mut(identifier).unwrap());
+        }
+        
+        // Try as value
+        let id = self.items
+            .values()
+            .find(|i| i.value == identifier)
+            .map(|i| i.id.to_string())
+            .ok_or_else(|| Error::ItemNotFound(identifier.to_string()))?;
+        
+        Ok(self.items.get_mut(&id).unwrap())
+    }
+    
+    /// Remove an item
+    pub fn remove_item(&mut self, identifier: &str) -> Result<()> {
+        let item = self.get_item(identifier)?;
+        let item_id = item.id.to_string();
+        self.items.remove(&item_id);
+        Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_list_creation() {
+        let list = List::new(
+            "test".to_string(),
+            "author".to_string(),
+            "description".to_string(),
+        );
+        assert_eq!(list.meta.name, "test");
+        assert_eq!(list.users.len(), 0);
+        assert_eq!(list.items.len(), 0);
+    }
+    
+    #[test]
+    fn test_add_user() {
+        let mut list = List::new(
+            "test".to_string(),
+            "author".to_string(),
+            "description".to_string(),
+        );
+        let user = User::new("alice".to_string(), None);
+        list.add_user(user).unwrap();
+        assert_eq!(list.users.len(), 1);
+    }
+    
+    #[test]
+    fn test_add_item() {
+        let mut list = List::new(
+            "test".to_string(),
+            "author".to_string(),
+            "description".to_string(),
+        );
+        let item = Item::new("blue".to_string());
+        list.add_item(item).unwrap();
+        assert_eq!(list.items.len(), 1);
+    }
+}

@@ -1,0 +1,17 @@
+/target
+Cargo.lock
+
+# Test files
+*.rankhaus.json
+*.rankhaus.gz
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
