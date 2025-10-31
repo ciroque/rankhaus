@@ -2,6 +2,7 @@ use anyhow::{bail, Context, Result};
 use crate::state::AppState;
 use crate::SessionsCommands;
 use rankhaus::session::SessionStatus;
+use crate::commands::rank;
 
 pub fn execute(command: SessionsCommands, state: Option<&mut AppState>) -> Result<()> {
     // Check if list is loaded
@@ -19,6 +20,9 @@ pub fn execute(command: SessionsCommands, state: Option<&mut AppState>) -> Resul
         }
         SessionsCommands::Delete { session_id } => {
             delete(state, session_id)
+        }
+        SessionsCommands::Resume { session_id } => {
+            rank::resume(session_id, state)
         }
     }
 }

@@ -1,0 +1,100 @@
+{
+  "meta": {
+    "name": "programming-languages",
+    "display_name": "Programming Languages",
+    "description": "Rank programming languages based on your preference",
+    "author": "System",
+    "created": "2025-10-31T17:15:00Z"
+  },
+  "users": {
+    "u0000001": {
+      "username": "<default>",
+      "display_name": "<default>",
+      "created": "2025-10-31T17:15:00Z",
+      "last_active": "2025-10-31T17:15:00Z"
+    }
+  },
+  "items": {
+    "i0000001": {
+      "value": "Python",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000002": {
+      "value": "JavaScript",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000003": {
+      "value": "Rust",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000004": {
+      "value": "Go",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000005": {
+      "value": "Java",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000006": {
+      "value": "C++",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000007": {
+      "value": "C#",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000008": {
+      "value": "TypeScript",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000009": {
+      "value": "Ruby",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000010": {
+      "value": "PHP",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000011": {
+      "value": "Swift",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000012": {
+      "value": "Kotlin",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000013": {
+      "value": "C",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000014": {
+      "value": "Scala",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000015": {
+      "value": "Haskell",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000016": {
+      "value": "Elixir",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000017": {
+      "value": "Clojure",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000018": {
+      "value": "Perl",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000019": {
+      "value": "Lua",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000020": {
+      "value": "Zig",
+      "created": "2025-10-31T17:15:00Z"
+    }
+  },
+  "rankings": []
+}

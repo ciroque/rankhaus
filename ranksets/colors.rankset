@@ -1,7 +1,6 @@
 {
   "meta": {
     "name": "colors",
-    "type": "rankset",
     "author": "Steve",
     "description": "Ranking list: colors",
     "created": "2025-10-31T04:34:20.102538790Z"
@@ -15,33 +14,33 @@
     }
   },
   "items": {
-    "3mgk4fy": {
-      "value": "blue",
-      "created": "2025-10-31T04:34:27.619862418Z"
-    },
-    "xwj10iu": {
-      "value": "black",
-      "created": "2025-10-31T04:34:31.989608814Z"
+    "hpfb4m2": {
+      "value": "green",
+      "created": "2025-10-31T04:34:28.994375346Z"
     },
     "2xa8y2f": {
       "value": "yellow",
       "created": "2025-10-31T04:34:38.390516691Z"
     },
+    "xwj10iu": {
+      "value": "black",
+      "created": "2025-10-31T04:34:31.989608814Z"
+    },
     "p4n51lz": {
       "value": "purple",
       "created": "2025-10-31T04:34:30.631233956Z"
     },
-    "hpfb4m2": {
-      "value": "green",
-      "created": "2025-10-31T04:34:28.994375346Z"
+    "yqt0n9v": {
+      "value": "red",
+      "created": "2025-10-31T04:34:26.425699309Z"
     },
     "2fcg2oa": {
       "value": "white",
       "created": "2025-10-31T04:34:32.939441391Z"
     },
-    "yqt0n9v": {
-      "value": "red",
-      "created": "2025-10-31T04:34:26.425699309Z"
+    "3mgk4fy": {
+      "value": "blue",
+      "created": "2025-10-31T04:34:27.619862418Z"
     },
     "v4g5fp0": {
       "value": "orange",
@@ -53,22 +52,73 @@
       "user_id": "usjmwcns",
       "strategy": "merge",
       "session": {
-        "id": "sd73f82b",
-        "created": "2025-10-31T04:35:41.652820859Z",
-        "last_updated": "2025-10-31T04:35:41.652820859Z",
-        "status": "in_progress",
+        "id": "sefp1930",
+        "created": "2025-10-31T17:01:44.607794690Z",
+        "last_updated": "2025-10-31T17:02:18.995454128Z",
+        "completed": "2025-10-31T17:02:18.995454128Z",
+        "status": "completed",
+        "comparisons": []
+      },
+      "result": {
+        "order": [
+          "3mgk4fy",
+          "hpfb4m2",
+          "2fcg2oa",
+          "2xa8y2f",
+          "xwj10iu",
+          "p4n51lz",
+          "v4g5fp0",
+          "yqt0n9v"
+        ],
+        "ratings": null
+      }
+    },
+    {
+      "user_id": "usjmwcns",
+      "strategy": "merge",
+      "session": {
+        "id": "s4awjtbu",
+        "created": "2025-10-31T17:02:27.352327764Z",
+        "last_updated": "2025-10-31T17:06:32.965182047Z",
+        "completed": "2025-10-31T17:06:32.965182047Z",
+        "status": "completed",
         "comparisons": []
       },
       "result": {
         "order": [
           "hpfb4m2",
           "3mgk4fy",
-          "2fcg2oa",
-          "v4g5fp0",
-          "yqt0n9v",
           "2xa8y2f",
-          "p4n51lz",
-          "xwj10iu"
+          "v4g5fp0",
+          "xwj10iu",
+          "2fcg2oa",
+          "yqt0n9v",
+          "p4n51lz"
+        ],
+        "ratings": null
+      }
+    },
+    {
+      "user_id": "usjmwcns",
+      "strategy": "merge",
+      "session": {
+        "id": "sd73f82b",
+        "created": "2025-10-31T04:35:41.652820859Z",
+        "last_updated": "2025-10-31T17:10:57.451296816Z",
+        "completed": "2025-10-31T17:10:57.451296816Z",
+        "status": "completed",
+        "comparisons": []
+      },
+      "result": {
+        "order": [
+          "3mgk4fy",
+          "hpfb4m2",
+          "2fcg2oa",
+          "2xa8y2f",
+          "v4g5fp0",
+          "xwj10iu",
+          "yqt0n9v",
+          "p4n51lz"
         ],
         "ratings": null
       }

@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "name": "pizza-toppings",
+    "display_name": "Pizza Toppings",
+    "description": "Rank your favorite pizza toppings from best to worst",
+    "author": "System",
+    "created": "2025-10-31T17:15:00Z"
+  },
+  "users": {
+    "u0000001": {
+      "username": "<default>",
+      "display_name": "<default>",
+      "created": "2025-10-31T17:15:00Z",
+      "last_active": "2025-10-31T17:15:00Z"
+    }
+  },
+  "items": {
+    "i0000001": {
+      "value": "Pepperoni",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000002": {
+      "value": "Mushrooms",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000003": {
+      "value": "Sausage",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000004": {
+      "value": "Onions",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000005": {
+      "value": "Green Peppers",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000006": {
+      "value": "Black Olives",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000007": {
+      "value": "Bacon",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000008": {
+      "value": "Pineapple",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000009": {
+      "value": "Extra Cheese",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000010": {
+      "value": "Jalapeños",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000011": {
+      "value": "Ham",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000012": {
+      "value": "Spinach",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000013": {
+      "value": "Anchovies",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000014": {
+      "value": "Tomatoes",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000015": {
+      "value": "Basil",
+      "created": "2025-10-31T17:15:00Z"
+    }
+  },
+  "rankings": []
+}

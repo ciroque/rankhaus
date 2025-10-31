@@ -1,0 +1,220 @@
+{
+  "meta": {
+    "name": "marvel-superheroes",
+    "display_name": "Marvel Superheroes",
+    "description": "Rank your favorite Marvel superheroes from the comics and MCU",
+    "author": "System",
+    "created": "2025-10-31T17:21:00Z"
+  },
+  "users": {
+    "u0000001": {
+      "username": "<default>",
+      "display_name": "<default>",
+      "created": "2025-10-31T17:21:00Z",
+      "last_active": "2025-10-31T17:21:00Z"
+    }
+  },
+  "items": {
+    "i0000001": {
+      "value": "Spider-Man (Peter Parker)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000002": {
+      "value": "Iron Man (Tony Stark)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000003": {
+      "value": "Captain America (Steve Rogers)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000004": {
+      "value": "Thor",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000005": {
+      "value": "Hulk (Bruce Banner)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000006": {
+      "value": "Black Widow (Natasha Romanoff)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000007": {
+      "value": "Hawkeye (Clint Barton)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000008": {
+      "value": "Black Panther (T'Challa)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000009": {
+      "value": "Doctor Strange (Stephen Strange)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000010": {
+      "value": "Scarlet Witch (Wanda Maximoff)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000011": {
+      "value": "Vision",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000012": {
+      "value": "Wolverine (Logan)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000013": {
+      "value": "Deadpool (Wade Wilson)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000014": {
+      "value": "Captain Marvel (Carol Danvers)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000015": {
+      "value": "Star-Lord (Peter Quill)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000016": {
+      "value": "Gamora",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000017": {
+      "value": "Drax the Destroyer",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000018": {
+      "value": "Rocket Raccoon",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000019": {
+      "value": "Groot",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000020": {
+      "value": "Ant-Man (Scott Lang)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000021": {
+      "value": "Wasp (Hope van Dyne)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000022": {
+      "value": "Winter Soldier (Bucky Barnes)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000023": {
+      "value": "Falcon (Sam Wilson)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000024": {
+      "value": "War Machine (James Rhodes)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000025": {
+      "value": "Loki",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000026": {
+      "value": "Daredevil (Matt Murdock)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000027": {
+      "value": "Jessica Jones",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000028": {
+      "value": "Luke Cage",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000029": {
+      "value": "Iron Fist (Danny Rand)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000030": {
+      "value": "Punisher (Frank Castle)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000031": {
+      "value": "Moon Knight (Marc Spector)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000032": {
+      "value": "She-Hulk (Jennifer Walters)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000033": {
+      "value": "Ms. Marvel (Kamala Khan)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000034": {
+      "value": "Shang-Chi",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000035": {
+      "value": "Cyclops (Scott Summers)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000036": {
+      "value": "Storm (Ororo Munroe)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000037": {
+      "value": "Jean Grey",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000038": {
+      "value": "Professor X (Charles Xavier)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000039": {
+      "value": "Magneto (Erik Lehnsherr)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000040": {
+      "value": "Rogue",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000041": {
+      "value": "Nightcrawler (Kurt Wagner)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000042": {
+      "value": "Beast (Hank McCoy)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000043": {
+      "value": "Iceman (Bobby Drake)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000044": {
+      "value": "Colossus (Piotr Rasputin)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000045": {
+      "value": "Gambit (Remy LeBeau)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000046": {
+      "value": "Silver Surfer (Norrin Radd)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000047": {
+      "value": "Ghost Rider (Johnny Blaze)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000048": {
+      "value": "Blade (Eric Brooks)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000049": {
+      "value": "Nova (Richard Rider)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000050": {
+      "value": "Venom (Eddie Brock)",
+      "created": "2025-10-31T17:21:00Z"
+    }
+  },
+  "rankings": []
+}

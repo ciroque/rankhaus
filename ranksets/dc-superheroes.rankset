@@ -1,0 +1,220 @@
+{
+  "meta": {
+    "name": "dc-superheroes",
+    "display_name": "DC Superheroes",
+    "description": "Rank your favorite DC superheroes from comics, movies, and TV",
+    "author": "System",
+    "created": "2025-10-31T17:21:00Z"
+  },
+  "users": {
+    "u0000001": {
+      "username": "<default>",
+      "display_name": "<default>",
+      "created": "2025-10-31T17:21:00Z",
+      "last_active": "2025-10-31T17:21:00Z"
+    }
+  },
+  "items": {
+    "i0000001": {
+      "value": "Superman (Clark Kent)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000002": {
+      "value": "Batman (Bruce Wayne)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000003": {
+      "value": "Wonder Woman (Diana Prince)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000004": {
+      "value": "The Flash (Barry Allen)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000005": {
+      "value": "Aquaman (Arthur Curry)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000006": {
+      "value": "Green Lantern (Hal Jordan)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000007": {
+      "value": "Green Lantern (John Stewart)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000008": {
+      "value": "Cyborg (Victor Stone)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000009": {
+      "value": "Shazam (Billy Batson)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000010": {
+      "value": "Martian Manhunter (J'onn J'onzz)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000011": {
+      "value": "Green Arrow (Oliver Queen)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000012": {
+      "value": "Black Canary (Dinah Lance)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000013": {
+      "value": "Hawkman (Carter Hall)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000014": {
+      "value": "Hawkgirl (Kendra Saunders)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000015": {
+      "value": "Nightwing (Dick Grayson)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000016": {
+      "value": "Robin (Tim Drake)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000017": {
+      "value": "Robin (Damian Wayne)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000018": {
+      "value": "Red Hood (Jason Todd)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000019": {
+      "value": "Batgirl (Barbara Gordon)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000020": {
+      "value": "Batwoman (Kate Kane)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000021": {
+      "value": "Catwoman (Selina Kyle)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000022": {
+      "value": "Harley Quinn",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000023": {
+      "value": "Poison Ivy (Pamela Isley)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000024": {
+      "value": "Supergirl (Kara Zor-El)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000025": {
+      "value": "Superboy (Conner Kent)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000026": {
+      "value": "Power Girl (Kara Zor-L)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000027": {
+      "value": "The Flash (Wally West)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000028": {
+      "value": "Kid Flash (Bart Allen)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000029": {
+      "value": "Zatanna",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000030": {
+      "value": "Constantine (John Constantine)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000031": {
+      "value": "Swamp Thing (Alec Holland)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000032": {
+      "value": "Raven",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000033": {
+      "value": "Starfire (Koriand'r)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000034": {
+      "value": "Beast Boy (Garfield Logan)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000035": {
+      "value": "Blue Beetle (Jaime Reyes)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000036": {
+      "value": "Booster Gold (Michael Jon Carter)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000037": {
+      "value": "Static (Virgil Hawkins)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000038": {
+      "value": "Plastic Man (Eel O'Brian)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000039": {
+      "value": "The Atom (Ray Palmer)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000040": {
+      "value": "Firestorm (Ronnie Raymond)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000041": {
+      "value": "Vixen (Mari McCabe)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000042": {
+      "value": "Black Lightning (Jefferson Pierce)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000043": {
+      "value": "Huntress (Helena Bertinelli)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000044": {
+      "value": "Question (Vic Sage)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000045": {
+      "value": "Lobo",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000046": {
+      "value": "Deathstroke (Slade Wilson)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000047": {
+      "value": "Red Tornado",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000048": {
+      "value": "Mera",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000049": {
+      "value": "Doctor Fate (Kent Nelson)",
+      "created": "2025-10-31T17:21:00Z"
+    },
+    "i0000050": {
+      "value": "Spectre (Jim Corrigan)",
+      "created": "2025-10-31T17:21:00Z"
+    }
+  },
+  "rankings": []
+}

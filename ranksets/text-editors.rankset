@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "name": "text-editors",
+    "display_name": "Text Editors",
+    "description": "Rank your favorite text editors and IDEs",
+    "author": "System",
+    "created": "2025-10-31T17:15:00Z"
+  },
+  "users": {
+    "u0000001": {
+      "username": "<default>",
+      "display_name": "<default>",
+      "created": "2025-10-31T17:15:00Z",
+      "last_active": "2025-10-31T17:15:00Z"
+    }
+  },
+  "items": {
+    "i0000001": {
+      "value": "Vim",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000002": {
+      "value": "Emacs",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000003": {
+      "value": "VS Code",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000004": {
+      "value": "Neovim",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000005": {
+      "value": "Sublime Text",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000006": {
+      "value": "IntelliJ IDEA",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000007": {
+      "value": "Atom",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000008": {
+      "value": "Notepad++",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000009": {
+      "value": "Nano",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000010": {
+      "value": "Zed",
+      "created": "2025-10-31T17:15:00Z"
+    }
+  },
+  "rankings": []
+}

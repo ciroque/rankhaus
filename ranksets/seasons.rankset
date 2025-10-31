@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "name": "seasons",
+    "display_name": "Seasons",
+    "description": "Rank the four seasons of the year",
+    "author": "System",
+    "created": "2025-10-31T17:15:00Z"
+  },
+  "users": {
+    "u0000001": {
+      "username": "<default>",
+      "display_name": "<default>",
+      "created": "2025-10-31T17:15:00Z",
+      "last_active": "2025-10-31T17:15:00Z"
+    }
+  },
+  "items": {
+    "i0000001": {
+      "value": "Spring",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000002": {
+      "value": "Summer",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000003": {
+      "value": "Fall",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000004": {
+      "value": "Winter",
+      "created": "2025-10-31T17:15:00Z"
+    }
+  },
+  "rankings": []
+}

@@ -137,10 +137,12 @@ fn print_help() {
     println!("  strategies list            List available strategies");
     println!("  strategies select <name>   Select a strategy");
     println!();
-    println!("  rank                       Start ranking session");
+    println!("  rank                       Start new ranking session");
+    println!("                             (Press 'q' during ranking to suspend)");
     println!();
     println!("  sessions list              List all ranking sessions");
     println!("  sessions show <id>         Show session details");
+    println!("  sessions resume <id>       Resume in-progress session");
     println!("  sessions delete <id>       Delete a session");
     println!();
     println!("  help                       Show this help");

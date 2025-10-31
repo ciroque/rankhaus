@@ -159,6 +159,12 @@ pub enum SessionsCommands {
         /// Session ID
         session_id: String,
     },
+    
+    /// Resume an in-progress session
+    Resume {
+        /// Session ID to resume
+        session_id: String,
+    },
 }
 
 fn main() -> Result<()> {

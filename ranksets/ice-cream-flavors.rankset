@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "name": "ice-cream-flavors",
+    "display_name": "Ice Cream Flavors",
+    "description": "Rank your favorite ice cream flavors",
+    "author": "System",
+    "created": "2025-10-31T17:15:00Z"
+  },
+  "users": {
+    "u0000001": {
+      "username": "<default>",
+      "display_name": "<default>",
+      "created": "2025-10-31T17:15:00Z",
+      "last_active": "2025-10-31T17:15:00Z"
+    }
+  },
+  "items": {
+    "i0000001": {
+      "value": "Vanilla",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000002": {
+      "value": "Chocolate",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000003": {
+      "value": "Strawberry",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000004": {
+      "value": "Mint Chocolate Chip",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000005": {
+      "value": "Cookie Dough",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000006": {
+      "value": "Cookies and Cream",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000007": {
+      "value": "Rocky Road",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000008": {
+      "value": "Pistachio",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000009": {
+      "value": "Coffee",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000010": {
+      "value": "Butter Pecan",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000011": {
+      "value": "Salted Caramel",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000012": {
+      "value": "Neapolitan",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000013": {
+      "value": "Cherry Garcia",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000014": {
+      "value": "Mango",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000015": {
+      "value": "Matcha Green Tea",
+      "created": "2025-10-31T17:15:00Z"
+    }
+  },
+  "rankings": []
+}

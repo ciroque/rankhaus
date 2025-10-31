@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "name": "movies-classic",
+    "display_name": "Classic Movies",
+    "description": "Rank the greatest classic films of all time",
+    "author": "System",
+    "created": "2025-10-31T17:15:00Z"
+  },
+  "users": {
+    "u0000001": {
+      "username": "<default>",
+      "display_name": "<default>",
+      "created": "2025-10-31T17:15:00Z",
+      "last_active": "2025-10-31T17:15:00Z"
+    }
+  },
+  "items": {
+    "i0000001": {
+      "value": "The Godfather",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000002": {
+      "value": "Casablanca",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000003": {
+      "value": "Citizen Kane",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000004": {
+      "value": "The Shawshank Redemption",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000005": {
+      "value": "Pulp Fiction",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000006": {
+      "value": "Schindler's List",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000007": {
+      "value": "12 Angry Men",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000008": {
+      "value": "The Dark Knight",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000009": {
+      "value": "Star Wars: A New Hope",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000010": {
+      "value": "Forrest Gump",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000011": {
+      "value": "The Matrix",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000012": {
+      "value": "Goodfellas",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000013": {
+      "value": "Fight Club",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000014": {
+      "value": "Inception",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000015": {
+      "value": "The Silence of the Lambs",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000016": {
+      "value": "Saving Private Ryan",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000017": {
+      "value": "The Green Mile",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000018": {
+      "value": "Interstellar",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000019": {
+      "value": "The Usual Suspects",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000020": {
+      "value": "Se7en",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000021": {
+      "value": "The Prestige",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000022": {
+      "value": "The Departed",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000023": {
+      "value": "Gladiator",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000024": {
+      "value": "The Lion King",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000025": {
+      "value": "Back to the Future",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000026": {
+      "value": "Raiders of the Lost Ark",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000027": {
+      "value": "Jurassic Park",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000028": {
+      "value": "Terminator 2: Judgment Day",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000029": {
+      "value": "Alien",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000030": {
+      "value": "The Shining",
+      "created": "2025-10-31T17:15:00Z"
+    }
+  },
+  "rankings": []
+}

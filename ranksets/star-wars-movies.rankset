@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "name": "star-wars-movies",
+    "display_name": "Star Wars Movies",
+    "description": "Rank all Star Wars films from the Skywalker Saga",
+    "author": "System",
+    "created": "2025-10-31T17:15:00Z"
+  },
+  "users": {
+    "u0000001": {
+      "username": "<default>",
+      "display_name": "<default>",
+      "created": "2025-10-31T17:15:00Z",
+      "last_active": "2025-10-31T17:15:00Z"
+    }
+  },
+  "items": {
+    "i0000001": {
+      "value": "Episode I: The Phantom Menace",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000002": {
+      "value": "Episode II: Attack of the Clones",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000003": {
+      "value": "Episode III: Revenge of the Sith",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000004": {
+      "value": "Episode IV: A New Hope",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000005": {
+      "value": "Episode V: The Empire Strikes Back",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000006": {
+      "value": "Episode VI: Return of the Jedi",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000007": {
+      "value": "Episode VII: The Force Awakens",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000008": {
+      "value": "Episode VIII: The Last Jedi",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000009": {
+      "value": "Episode IX: The Rise of Skywalker",
+      "created": "2025-10-31T17:15:00Z"
+    }
+  },
+  "rankings": []
+}

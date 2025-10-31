@@ -29,7 +29,7 @@ pub fn execute(command: Commands) -> Result<()> {
             strategy::execute(command, None)
         }
         Commands::Rank => {
-            rank::execute(None)
+            rank::start(None)
         }
         Commands::Sessions { command } => {
             sessions::execute(command, None)
@@ -56,7 +56,7 @@ pub fn execute_with_state(command: Commands, state: &mut AppState) -> Result<()>
             strategy::execute(command, Some(state))
         }
         Commands::Rank => {
-            rank::execute(Some(state))
+            rank::start(Some(state))
         }
         Commands::Sessions { command } => {
             sessions::execute(command, Some(state))
