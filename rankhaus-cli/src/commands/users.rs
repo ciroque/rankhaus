@@ -168,7 +168,7 @@ mod tests {
         let mut rankset = RankSet::new(
             "test".to_string(),
             "author".to_string(),
-            "description".to_string(),
+            None,
         );
         rankset.file_path = Some(PathBuf::from("test_users.rankset"));
         
@@ -185,7 +185,7 @@ mod tests {
     #[test]
     fn test_list_empty() {
         let mut state = AppState::new();
-        state.rankset = Some(RankSet::new("test".to_string(), "author".to_string(), "desc".to_string()));
+        state.rankset = Some(RankSet::new("test".to_string(), "author".to_string(), None));
         state.rankset.as_mut().unwrap().file_path = Some(PathBuf::from("test.json"));
         
         let result = list(Some(&mut state));

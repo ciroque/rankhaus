@@ -238,7 +238,7 @@ mod tests {
         let mut list = RankSet::new(
             "test".to_string(),
             "author".to_string(),
-            "description".to_string(),
+            None,
         );
         list.file_path = Some(PathBuf::from("test_items.rankset"));
         

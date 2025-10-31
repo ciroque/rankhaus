@@ -8,10 +8,9 @@ use std::path::{Path, PathBuf};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RankSetMeta {
     pub name: String,
-    #[serde(rename = "type")]
-    pub list_type: String,
     pub author: String,
-    pub description: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub description: Option<String>,
     pub created: DateTime<Utc>,
 }
 
@@ -29,11 +28,10 @@ pub struct RankSet {
 
 impl RankSet {
     /// Create a new empty rank set
-    pub fn new(name: String, author: String, description: String) -> Self {
+    pub fn new(name: String, author: String, description: Option<String>) -> Self {
         Self {
             meta: RankSetMeta {
                 name,
-                list_type: "rankset".to_string(),
                 author,
                 description,
                 created: Utc::now(),
@@ -199,7 +197,7 @@ mod tests {
         let rankset = RankSet::new(
             "test".to_string(),
             "author".to_string(),
-            "description".to_string(),
+            Some("description".to_string()),
         );
         assert_eq!(rankset.meta.name, "test");
         assert_eq!(rankset.users.len(), 0);
@@ -211,7 +209,7 @@ mod tests {
         let mut rankset = RankSet::new(
             "test".to_string(),
             "author".to_string(),
-            "description".to_string(),
+            None,
         );
         let user = User::new("alice".to_string(), None);
         rankset.add_user(user).unwrap();
@@ -223,7 +221,7 @@ mod tests {
         let mut rankset = RankSet::new(
             "test".to_string(),
             "author".to_string(),
-            "description".to_string(),
+            None,
         );
         let item = Item::new("blue".to_string());
         rankset.add_item(item).unwrap();
@@ -232,7 +230,7 @@ mod tests {
     
     #[test]
     fn test_get_user_by_id() {
-        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), None);
         let user = User::new("alice".to_string(), None);
         let user_id = user.id.to_string();
         rankset.add_user(user).unwrap();
@@ -243,7 +241,7 @@ mod tests {
     
     #[test]
     fn test_get_user_by_username() {
-        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), None);
         let user = User::new("alice".to_string(), None);
         rankset.add_user(user).unwrap();
         
@@ -253,14 +251,14 @@ mod tests {
     
     #[test]
     fn test_get_user_not_found() {
-        let rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let rankset = RankSet::new("test".to_string(), "author".to_string(), None);
         let result = rankset.get_user("nonexistent");
         assert!(result.is_err());
     }
     
     #[test]
     fn test_get_item_by_id() {
-        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), None);
         let item = Item::new("blue".to_string());
         let item_id = item.id.to_string();
         rankset.add_item(item).unwrap();
@@ -271,7 +269,7 @@ mod tests {
     
     #[test]
     fn test_get_item_by_value() {
-        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), None);
         let item = Item::new("blue".to_string());
         rankset.add_item(item).unwrap();
         
@@ -281,14 +279,14 @@ mod tests {
     
     #[test]
     fn test_get_item_not_found() {
-        let rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let rankset = RankSet::new("test".to_string(), "author".to_string(), None);
         let result = rankset.get_item("nonexistent");
         assert!(result.is_err());
     }
     
     #[test]
     fn test_remove_item() {
-        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), None);
         let item = Item::new("blue".to_string());
         rankset.add_item(item).unwrap();
         assert_eq!(rankset.items.len(), 1);
@@ -299,7 +297,7 @@ mod tests {
     
     #[test]
     fn test_duplicate_item() {
-        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), None);
         let item1 = Item::new("blue".to_string());
         let id = item1.id.clone();
         rankset.add_item(item1).unwrap();
@@ -311,7 +309,7 @@ mod tests {
     
     #[test]
     fn test_duplicate_user() {
-        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), None);
         let user1 = User::new("alice".to_string(), None);
         let id = user1.id.clone();
         rankset.add_user(user1).unwrap();
@@ -325,7 +323,7 @@ mod tests {
     fn test_save_and_load() {
         use std::fs;
         
-        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), None);
         rankset.add_item(Item::new("blue".to_string())).unwrap();
         rankset.add_user(User::new("alice".to_string(), None)).unwrap();
         

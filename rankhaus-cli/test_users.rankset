@@ -1,17 +1,15 @@
 {
   "meta": {
     "name": "test",
-    "type": "rankset",
     "author": "author",
-    "description": "description",
-    "created": "2025-10-31T05:02:30.533820975Z"
+    "created": "2025-10-31T05:07:36.192766881Z"
   },
   "users": {
-    "ukw0zuxo": {
+    "unmefm2x": {
       "username": "alice",
       "display_name": "Alice",
-      "created": "2025-10-31T05:02:30.533827338Z",
-      "last_active": "2025-10-31T05:02:30.533827338Z"
+      "created": "2025-10-31T05:07:36.192773389Z",
+      "last_active": "2025-10-31T05:07:36.192773389Z"
     }
   },
   "items": {},

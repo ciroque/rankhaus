@@ -35,9 +35,26 @@ pub fn execute(
         }
     };
     
+    // Prompt for description if not provided (only in interactive mode)
+    let list_description = if let Some(d) = description {
+        Some(d)
+    } else if state.is_some() {
+        // In REPL mode, prompt for description
+        let prompt = inquire::Text::new("Enter RankSet description (optional):")
+            .prompt()
+            .context("Failed to read description")?;
+        if prompt.trim().is_empty() {
+            None
+        } else {
+            Some(prompt)
+        }
+    } else {
+        // In direct mode, no description
+        None
+    };
+    
     // Create the list
     let list_author = author.unwrap_or_else(|| username.clone());
-    let list_description = description.unwrap_or_else(|| format!("Ranking list: {}", name));
     let mut list = RankSet::new(name.clone(), list_author, list_description);
     
     // Add the initial user
