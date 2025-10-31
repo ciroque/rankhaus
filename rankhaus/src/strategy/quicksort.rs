@@ -80,8 +80,9 @@ impl QuickSortStrategy {
     fn get_comparison(&self, a: &Id, b: &Id) -> Option<Id> {
         let key1 = (a.to_string(), b.to_string());
         let key2 = (b.to_string(), a.to_string());
-        
-        self.comparisons.get(&key1)
+
+        self.comparisons
+            .get(&key1)
             .or_else(|| self.comparisons.get(&key2))
             .map(|s| Id::from(s.as_str()))
     }
@@ -92,7 +93,7 @@ impl QuickSortStrategy {
         }
 
         let op_idx = self.state.partition_stack.len() - 1;
-        
+
         // Check if we've compared all items (excluding pivot)
         let needs_processing = {
             let op = &self.state.partition_stack[op_idx];
@@ -104,32 +105,34 @@ impl QuickSortStrategy {
             }
             op.current_idx >= op.items.len() || (op.less.len() + op.greater.len()) >= count
         };
-        
+
         if needs_processing {
             // Partition complete, create sub-partitions
             let op = self.state.partition_stack.pop().unwrap();
             let pivot = &op.items[op.pivot_idx];
-            
+
             // Ensure sorted array is large enough
             let total_size = op.less.len() + 1 + op.greater.len();
             if self.state.sorted.len() < op.start_pos + total_size {
-                self.state.sorted.resize(op.start_pos + total_size, Id::default());
+                self.state
+                    .sorted
+                    .resize(op.start_pos + total_size, Id::default());
             }
-            
+
             // Place less items
             for (i, item) in op.less.iter().enumerate() {
                 self.state.sorted[op.start_pos + i] = item.clone();
             }
-            
+
             // Place pivot
             let pivot_pos = op.start_pos + op.less.len();
             self.state.sorted[pivot_pos] = pivot.clone();
-            
+
             // Place greater items
             for (i, item) in op.greater.iter().enumerate() {
                 self.state.sorted[pivot_pos + 1 + i] = item.clone();
             }
-            
+
             // Push sub-partitions onto stack (greater first, so less is processed first)
             if op.greater.len() > 1 {
                 let greater_op = PartitionOp {
@@ -142,7 +145,7 @@ impl QuickSortStrategy {
                 };
                 self.state.partition_stack.push(greater_op);
             }
-            
+
             if op.less.len() > 1 {
                 let less_op = PartitionOp {
                     items: op.less.clone(),
@@ -154,10 +157,10 @@ impl QuickSortStrategy {
                 };
                 self.state.partition_stack.push(less_op);
             }
-            
+
             return true;
         }
-        
+
         false
     }
 }
@@ -174,11 +177,11 @@ impl RankStrategy for QuickSortStrategy {
 
         let op_idx = self.state.partition_stack.len() - 1;
         let op = &mut self.state.partition_stack[op_idx];
-        
+
         if op.current_idx >= op.items.len() {
             return Ok(());
         }
-        
+
         // Skip pivot itself
         if op.current_idx == op.pivot_idx {
             op.current_idx += 1;
@@ -187,14 +190,14 @@ impl RankStrategy for QuickSortStrategy {
             }
             return Ok(());
         }
-        
+
         let current = &op.items[op.current_idx];
         let pivot = &op.items[op.pivot_idx];
-        
+
         // Record comparison
         let key = (current.to_string(), pivot.to_string());
         self.comparisons.insert(key, winner_id.to_string());
-        
+
         // Add to appropriate partition
         if winner_id == current {
             // Current is better (less) than pivot
@@ -203,19 +206,21 @@ impl RankStrategy for QuickSortStrategy {
             // Pivot is better, current goes to greater
             op.greater.push(current.clone());
         }
-        
+
         op.current_idx += 1;
-        
+
         // Check if partition is complete
-        if op.current_idx >= op.items.len() || (op.less.len() + op.greater.len()) >= (op.items.len() - 1) {
+        if op.current_idx >= op.items.len()
+            || (op.less.len() + op.greater.len()) >= (op.items.len() - 1)
+        {
             self.process_partition();
-            
+
             // Check if all partitions are done
             if self.state.partition_stack.is_empty() {
                 self.state.completed = true;
             }
         }
-        
+
         Ok(())
     }
 
@@ -247,12 +252,12 @@ impl RankStrategy for QuickSortStrategy {
         }
 
         let op = self.state.partition_stack.last()?;
-        
+
         // Skip if we've processed all items
         if op.current_idx >= op.items.len() {
             return None;
         }
-        
+
         // Skip pivot itself
         let mut idx = op.current_idx;
         if idx == op.pivot_idx {
@@ -261,15 +266,15 @@ impl RankStrategy for QuickSortStrategy {
                 return None;
             }
         }
-        
+
         let current = &op.items[idx];
         let pivot = &op.items[op.pivot_idx];
-        
+
         // Check if we already have this comparison
         if self.get_comparison(current, pivot).is_some() {
             return None;
         }
-        
+
         Some((current.clone(), pivot.clone()))
     }
 
@@ -298,7 +303,7 @@ mod tests {
         let items = create_test_items(5);
         let ids: Vec<Id> = items.iter().map(|item| item.id.clone()).collect();
         let strategy = QuickSortStrategy::new(ids);
-        
+
         assert_eq!(strategy.name(), "quicksort");
         assert!(!strategy.is_complete());
     }
@@ -315,7 +320,7 @@ mod tests {
         let items = create_test_items(1);
         let ids: Vec<Id> = items.iter().map(|item| item.id.clone()).collect();
         let mut strategy = QuickSortStrategy::new(ids.clone());
-        
+
         assert!(strategy.is_complete());
         let result = strategy.finalize().unwrap();
         assert_eq!(result.order.unwrap(), ids);
@@ -326,13 +331,13 @@ mod tests {
         let items = create_test_items(2);
         let ids: Vec<Id> = items.iter().map(|item| item.id.clone()).collect();
         let mut strategy = QuickSortStrategy::new(ids.clone());
-        
+
         // Should need one comparison
         let (_a, _b) = strategy.next_comparison().unwrap();
-        
+
         // Choose first item as winner
         strategy.compare(&items[0], &items[1], &ids[0]).unwrap();
-        
+
         assert!(strategy.is_complete());
         let result = strategy.finalize().unwrap();
         assert_eq!(result.order.unwrap(), vec![ids[0].clone(), ids[1].clone()]);
@@ -343,7 +348,7 @@ mod tests {
         let items = create_test_items(3);
         let ids: Vec<Id> = items.iter().map(|item| item.id.clone()).collect();
         let mut strategy = QuickSortStrategy::new(ids.clone());
-        
+
         // Perform comparisons until complete
         while let Some((a, b)) = strategy.next_comparison() {
             // Always prefer lower index (simulates consistent preference)
@@ -352,7 +357,7 @@ mod tests {
             let item_b = items.iter().find(|i| i.id == b).unwrap();
             strategy.compare(item_a, item_b, winner).unwrap();
         }
-        
+
         assert!(strategy.is_complete());
         let result = strategy.finalize().unwrap();
         assert_eq!(result.order.unwrap().len(), 3);
@@ -363,21 +368,21 @@ mod tests {
         let items = create_test_items(4);
         let ids: Vec<Id> = items.iter().map(|item| item.id.clone()).collect();
         let mut strategy = QuickSortStrategy::new(ids.clone());
-        
+
         // Do one comparison
         if let Some((a, b)) = strategy.next_comparison() {
             let item_a = items.iter().find(|i| i.id == a).unwrap();
             let item_b = items.iter().find(|i| i.id == b).unwrap();
             strategy.compare(item_a, item_b, &a).unwrap();
         }
-        
+
         // Serialize
         let state = strategy.serialize_state().unwrap();
-        
+
         // Create new strategy and deserialize
         let mut new_strategy = QuickSortStrategy::new(ids.clone());
         new_strategy.deserialize_state(state).unwrap();
-        
+
         // Should have same state
         assert_eq!(strategy.is_complete(), new_strategy.is_complete());
     }
@@ -387,7 +392,7 @@ mod tests {
         let items = create_test_items(3);
         let ids: Vec<Id> = items.iter().map(|item| item.id.clone()).collect();
         let mut strategy = QuickSortStrategy::new(ids);
-        
+
         // Try to finalize before completing
         assert!(strategy.finalize().is_err());
     }

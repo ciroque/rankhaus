@@ -1,4 +1,4 @@
-.PHONY: help build release test install clean fmt clippy check all
+.PHONY: help build release test install clean fmt fmt-fix clippy check all
 
 # Default target
 help:
@@ -9,7 +9,8 @@ help:
 	@echo "  make test       - Run all tests"
 	@echo "  make install    - Install release binary to ~/.cargo/bin"
 	@echo "  make clean      - Clean build artifacts"
-	@echo "  make fmt        - Format code"
+	@echo "  make fmt        - Check code formatting"
+	@echo "  make fmt-fix    - Format code (apply fixes)"
 	@echo "  make clippy     - Run clippy lints"
 	@echo "  make check      - Run fmt, clippy, and test"
 	@echo "  make all        - Run check and build release"
@@ -36,8 +37,12 @@ clean:
 	cargo clean
 	rm -f .rankhaus_history
 
-# Format code
+# Check code formatting
 fmt:
+	cargo fmt --all --check
+
+# Format code (apply fixes)
+fmt-fix:
 	cargo fmt --all
 
 # Run clippy lints
