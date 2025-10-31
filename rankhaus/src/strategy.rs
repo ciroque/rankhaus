@@ -39,6 +39,9 @@ pub trait RankStrategy: Send + Sync {
 #[cfg(feature = "merge")]
 pub mod merge;
 
+#[cfg(feature = "quicksort")]
+pub mod quicksort;
+
 // TODO: Implement additional strategies
 // #[cfg(feature = "elo")]
 // pub mod elo;

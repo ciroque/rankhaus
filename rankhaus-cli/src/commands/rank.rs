@@ -2,6 +2,8 @@ use crate::state::AppState;
 use anyhow::{bail, Context, Result};
 use rankhaus::session::SessionStatus;
 use rankhaus::strategy::merge::MergeStrategy;
+#[cfg(feature = "quicksort")]
+use rankhaus::strategy::quicksort::QuickSortStrategy;
 use rankhaus::strategy::RankStrategy;
 use rankhaus::Ranking;
 
@@ -34,16 +36,25 @@ pub fn start(state: Option<&mut AppState>) -> Result<()> {
     println!("Items to rank: {}", rankset.items.len());
     println!();
 
-    // Create strategy
+    // Create strategy based on active strategy
     let item_ids: Vec<_> = rankset.items.keys().map(|k| k.clone().into()).collect();
-    let mut strategy = MergeStrategy::new(item_ids);
-
-    // Create ranking object to track session
-    let mut ranking = Ranking::new(active_user_id.clone(), app_state.active_strategy.clone());
-    let session_id = ranking.session.info.id.clone();
-
-    // Perform ranking
-    perform_ranking(rankset, &mut strategy, &mut ranking, session_id)
+    
+    match app_state.active_strategy.as_str() {
+        "merge" => {
+            let mut strategy = MergeStrategy::new(item_ids);
+            let mut ranking = Ranking::new(active_user_id.clone(), app_state.active_strategy.clone());
+            let session_id = ranking.session.info.id.clone();
+            perform_ranking(rankset, &mut strategy, &mut ranking, session_id)
+        }
+        #[cfg(feature = "quicksort")]
+        "quicksort" => {
+            let mut strategy = QuickSortStrategy::new(item_ids);
+            let mut ranking = Ranking::new(active_user_id.clone(), app_state.active_strategy.clone());
+            let session_id = ranking.session.info.id.clone();
+            perform_ranking(rankset, &mut strategy, &mut ranking, session_id)
+        }
+        _ => bail!("Unknown strategy: {}. Use 'strategies list' to see available strategies.", app_state.active_strategy),
+    }
 }
 
 pub fn resume(session_id: String, state: Option<&mut AppState>) -> Result<()> {
@@ -76,29 +87,46 @@ pub fn resume(session_id: String, state: Option<&mut AppState>) -> Result<()> {
     );
     println!();
 
-    // Create strategy with all items
+    // Create strategy based on the ranking's strategy type
     let item_ids: Vec<_> = rankset.items.keys().map(|k| k.clone().into()).collect();
-    let mut strategy = MergeStrategy::new(item_ids);
-
-    // Replay all saved comparisons to rebuild strategy state
-    println!("Restoring session state...");
-    for comparison in &ranking.session.comparisons {
-        let item_a = rankset.get_item(&comparison.a.to_string())?;
-        let item_b = rankset.get_item(&comparison.b.to_string())?;
-        strategy.compare(item_a, item_b, &comparison.winner)?;
+    
+    match ranking.strategy.as_str() {
+        "merge" => {
+            let mut strategy = MergeStrategy::new(item_ids);
+            
+            // Replay all saved comparisons to rebuild strategy state
+            println!("Restoring session state...");
+            for comparison in &ranking.session.comparisons {
+                let item_a = rankset.get_item(&comparison.a.to_string())?;
+                let item_b = rankset.get_item(&comparison.b.to_string())?;
+                strategy.compare(item_a, item_b, &comparison.winner)?;
+            }
+            println!("✓ Restored {} comparisons\n", ranking.session.comparisons.len());
+            
+            perform_ranking(rankset, &mut strategy, &mut ranking, session_id)
+        }
+        #[cfg(feature = "quicksort")]
+        "quicksort" => {
+            let mut strategy = QuickSortStrategy::new(item_ids);
+            
+            // Replay all saved comparisons to rebuild strategy state
+            println!("Restoring session state...");
+            for comparison in &ranking.session.comparisons {
+                let item_a = rankset.get_item(&comparison.a.to_string())?;
+                let item_b = rankset.get_item(&comparison.b.to_string())?;
+                strategy.compare(item_a, item_b, &comparison.winner)?;
+            }
+            println!("✓ Restored {} comparisons\n", ranking.session.comparisons.len());
+            
+            perform_ranking(rankset, &mut strategy, &mut ranking, session_id)
+        }
+        _ => bail!("Unknown strategy: {}. Cannot resume session.", ranking.strategy),
     }
-    println!(
-        "✓ Restored {} comparisons\n",
-        ranking.session.comparisons.len()
-    );
-
-    // Continue ranking
-    perform_ranking(rankset, &mut strategy, &mut ranking, session_id)
 }
 
-fn perform_ranking(
+fn perform_ranking<S: RankStrategy>(
     rankset: &mut rankhaus::RankSet,
-    strategy: &mut MergeStrategy,
+    strategy: &mut S,
     ranking: &mut Ranking,
     session_id: rankhaus::Id,
 ) -> Result<()> {

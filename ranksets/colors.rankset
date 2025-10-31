@@ -18,13 +18,17 @@
       "value": "red",
       "created": "2025-10-31T04:34:26.425699309Z"
     },
+    "2xa8y2f": {
+      "value": "yellow",
+      "created": "2025-10-31T04:34:38.390516691Z"
+    },
     "hpfb4m2": {
       "value": "green",
       "created": "2025-10-31T04:34:28.994375346Z"
     },
-    "3mgk4fy": {
-      "value": "blue",
-      "created": "2025-10-31T04:34:27.619862418Z"
+    "2fcg2oa": {
+      "value": "white",
+      "created": "2025-10-31T04:34:32.939441391Z"
     },
     "p4n51lz": {
       "value": "purple",
@@ -38,13 +42,9 @@
       "value": "black",
       "created": "2025-10-31T04:34:31.989608814Z"
     },
-    "2fcg2oa": {
-      "value": "white",
-      "created": "2025-10-31T04:34:32.939441391Z"
-    },
-    "2xa8y2f": {
-      "value": "yellow",
-      "created": "2025-10-31T04:34:38.390516691Z"
+    "3mgk4fy": {
+      "value": "blue",
+      "created": "2025-10-31T04:34:27.619862418Z"
     }
   },
   "rankings": [
@@ -119,6 +119,31 @@
           "xwj10iu",
           "yqt0n9v",
           "p4n51lz"
+        ],
+        "ratings": null
+      }
+    },
+    {
+      "user_id": "usjmwcns",
+      "strategy": "quicksort",
+      "session": {
+        "id": "scy5djbg",
+        "created": "2025-10-31T19:05:20.962899179Z",
+        "last_updated": "2025-10-31T19:05:42.256148782Z",
+        "completed": "2025-10-31T19:05:42.256148782Z",
+        "status": "completed",
+        "comparisons": []
+      },
+      "result": {
+        "order": [
+          "p4n51lz",
+          "2fcg2oa",
+          "v4g5fp0",
+          "hpfb4m2",
+          "xwj10iu",
+          "2xa8y2f",
+          "3mgk4fy",
+          "yqt0n9v"
         ],
         "ratings": null
       }

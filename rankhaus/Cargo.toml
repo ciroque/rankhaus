@@ -19,8 +19,9 @@ rand = { workspace = true }
 proptest = { workspace = true }
 
 [features]
-default = ["merge"]
+default = ["merge", "quicksort"]
 merge = []
+quicksort = []
 elo = []
 tournament = []
 condorcet = []

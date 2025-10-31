@@ -4,7 +4,8 @@ A Rust-based command-line tool for performing interactive stack ranking of arbit
 
 ## Features
 
-- **Interactive Ranking**: Merge sort-based pairwise comparison for efficient ranking
+- **Multiple Ranking Strategies**: Choose between merge sort and quicksort (more coming soon)
+- **Interactive Ranking**: Efficient pairwise comparison with ~n log₂(n) comparisons
 - **Session Management**: Save progress after each comparison, resume anytime with `sessions resume`
 - **Graceful Suspend**: Press 'q' during ranking to save and exit
 - **Multi-User Support**: Track rankings from multiple users with separate sessions
@@ -63,6 +64,7 @@ Item 1
 Item 2
 Item 3
 ^D
+rankhaus> strategies select quicksort  # Optional: choose ranking strategy
 rankhaus> rank
 ```
 
@@ -192,13 +194,61 @@ Ranksets are stored as JSON files in `ranksets/`:
 
 **Note**: Comparisons are saved during ranking for resume capability, then cleared on completion to save space.
 
-## Ranking Strategy
+## Ranking Strategies
 
-Currently implements **Merge Sort** with adaptive pairwise comparisons:
-- Efficient: ~n log₂(n) comparisons for n items
+Select a strategy with `strategies select <name>`. All strategies support suspend/resume.
+
+| Strategy | Description | Where It Shines | Comparisons | Status |
+|----------|-------------|-----------------|-------------|--------|
+| **merge** | Merge sort with pairwise comparisons | General purpose, predictable | ~n log₂(n) | ✅ Implemented |
+| **quicksort** | Pivot-based partitioning | Similar to merge, different comparison order | ~n log₂(n) | ✅ Implemented |
+| **elo** | Elo rating system with incremental updates | Continuous rating, can stop anytime | Variable, user decides | ❌ Not implemented |
+| **swiss** | Swiss tournament pairing | Large lists, balanced matchups | ~n log₂(n) | ❌ Not implemented |
+| **condorcet** | All pairwise comparisons | Small lists, perfect accuracy | n² | ❌ Not implemented |
+| **active** | Active learning / uncertainty sampling | Minimize comparisons with ML | Variable, adaptive | ❌ Not implemented |
+| **btm** | Bradley-Terry-Luce statistical model | Statistical ranking, confidence intervals | Variable, adaptive | ❌ Not implemented |
+
+### Strategy Details
+
+**Merge Sort** (default)
+- Divide-and-conquer approach
 - Deterministic and stable
-- Progress saved after each comparison
-- Can be suspended and resumed at any time
+- Predictable number of comparisons
+- Best for: Most use cases
+
+**QuickSort**
+- Pivot-based partitioning
+- Similar efficiency to merge
+- Different comparison order may feel more natural
+- Best for: Alternative to merge with similar guarantees
+
+**Elo Rating** (planned)
+- Rate items incrementally
+- Can stop at any time
+- Natural for ongoing/evolving rankings
+- Best for: Continuous rating, large dynamic lists
+
+**Swiss Tournament** (planned)
+- Pairs items with similar records
+- Balanced comparisons
+- Best for: Large lists, tournament-style ranking
+
+**Condorcet** (planned)
+- Every item compared to every other
+- Mathematically optimal
+- Handles cycles with tiebreaking
+- Best for: Small lists (<20 items) where perfect accuracy matters
+
+**Active Learning** (planned)
+- Uses uncertainty to select most informative pairs
+- Minimizes comparisons needed
+- Requires statistical modeling
+- Best for: Very large lists, minimize user effort
+
+**Bradley-Terry-Luce** (planned)
+- Statistical model with confidence intervals
+- Provides probability-based rankings
+- Best for: When you want statistical confidence in results
 
 ## Development
 
@@ -216,7 +266,8 @@ rankhaus/
 │       ├── ranking.rs     # Ranking results
 │       ├── session.rs     # Session tracking
 │       └── strategy/      # Ranking strategies
-│           └── merge.rs   # Merge sort implementation
+│           ├── merge.rs   # Merge sort implementation
+│           └── quicksort.rs # QuickSort implementation
 ├── rankhaus-cli/          # Binary crate
 │   ├── src/
 │   │   ├── main.rs        # CLI entry point
