@@ -54,10 +54,10 @@ jobs:
             target: aarch64-apple-darwin
             artifact_name: rankhaus
             asset_name: rankhaus-macos-aarch64
-          - os: windows-latest
-            target: x86_64-pc-windows-msvc
-            artifact_name: rankhaus.exe
-            asset_name: rankhaus-windows-x86_64.exe
+#          - os: windows-latest
+#            target: x86_64-pc-windows-msvc
+#            artifact_name: rankhaus.exe
+#            asset_name: rankhaus-windows-x86_64.exe
     
     steps:
       - uses: actions/checkout@v4
