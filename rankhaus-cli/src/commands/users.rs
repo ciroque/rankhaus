@@ -25,6 +25,7 @@ pub fn execute(command: UsersCommands, state: Option<&mut AppState>) -> Result<(
             new_display_name,
         } => edit(state, identifier, new_display_name),
         UsersCommands::Select { identifier } => select(state, identifier),
+        UsersCommands::Default { identifier } => default(state, identifier),
     }
 }
 
@@ -55,12 +56,14 @@ fn list(state: Option<&mut AppState>) -> Result<()> {
         } else {
             " "
         };
+        let default_marker = if user.default { " [default]" } else { "" };
         println!(
-            "{} {:<9} {:<20} {:<30}",
+            "{} {:<9} {:<20} {:<30}{}",
             marker,
             user.id.as_str(),
             user.username,
-            user.display_name
+            user.display_name,
+            default_marker
         );
     }
 
@@ -78,15 +81,26 @@ fn add(state: Option<&mut AppState>, username: String, display_name: Option<Stri
         bail!("User '{}' already exists", username);
     }
 
-    let user = User::new(username.clone(), display_name.clone());
+    let mut user = User::new(username.clone(), display_name.clone());
+    
+    // If this is the first user, make them default
+    if rankset.users.is_empty() {
+        user.default = true;
+    }
+    
     let user_id = user.id.to_string();
+    let is_default = user.default;
     rankset.add_user(user)?;
 
     // Auto-save
     rankset.save().context("Failed to save rankset")?;
 
     let display = display_name.as_ref().unwrap_or(&username);
-    println!("✓ Added user: {} ({}) - {}", username, user_id, display);
+    if is_default {
+        println!("✓ Added user: {} ({}) - {} [default]", username, user_id, display);
+    } else {
+        println!("✓ Added user: {} ({}) - {}", username, user_id, display);
+    }
 
     Ok(())
 }
@@ -170,6 +184,48 @@ fn select(state: Option<&mut AppState>, identifier: String) -> Result<()> {
     app_state.active_user_id = Some(user_id);
 
     println!("✓ Active user: {} ({})", username, user.id.as_str());
+
+    Ok(())
+}
+
+fn default(state: Option<&mut AppState>, identifier: Option<String>) -> Result<()> {
+    let rankset = state
+        .and_then(|s| s.rankset.as_mut())
+        .ok_or_else(|| anyhow::anyhow!("No rankset loaded"))?;
+
+    // If no identifier provided, show current default
+    if identifier.is_none() {
+        let default_user = rankset.users.values().find(|u| u.default);
+        
+        if let Some(user) = default_user {
+            println!("Default user: {} ({})", user.username, user.display_name);
+        } else {
+            println!("No default user set");
+        }
+        return Ok(());
+    }
+
+    // Set new default user
+    let identifier = identifier.unwrap();
+    let user = rankset.get_user(&identifier)?;
+    let user_id = user.id.clone();
+    let username = user.username.clone();
+    let display_name = user.display_name.clone();
+
+    // Unset current default
+    for user in rankset.users.values_mut() {
+        user.default = false;
+    }
+
+    // Set new default
+    let user = rankset.get_user_mut(&user_id.to_string())?;
+    user.default = true;
+    user.touch();
+
+    // Auto-save
+    rankset.save().context("Failed to save rankset")?;
+
+    println!("✓ Default user set to: {} ({})", username, display_name);
 
     Ok(())
 }

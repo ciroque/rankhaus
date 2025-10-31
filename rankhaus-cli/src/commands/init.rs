@@ -24,8 +24,9 @@ pub fn execute(
     let list_author = author.unwrap_or_else(|| username.clone());
     let mut list = RankSet::new(name.clone(), list_author, list_description);
 
-    // Add the initial user
-    let user = User::new(username.clone(), user_display_name);
+    // Add the initial user (first user is always default)
+    let mut user = User::new(username.clone(), user_display_name);
+    user.default = true;
     let user_id = user.id.to_string();
     list.add_user(user)?;
 

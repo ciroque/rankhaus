@@ -2,20 +2,21 @@
   "meta": {
     "name": "test",
     "author": "author",
-    "created": "2025-10-31T19:39:14.809823250Z"
+    "created": "2025-10-31T19:50:49.493767781Z"
   },
   "users": {
-    "u0lr2e0i": {
+    "u17g9bcw": {
       "username": "testuser",
       "display_name": "testuser",
-      "created": "2025-10-31T19:39:14.809834943Z",
-      "last_active": "2025-10-31T19:39:14.809834943Z"
+      "default": false,
+      "created": "2025-10-31T19:50:49.493779494Z",
+      "last_active": "2025-10-31T19:50:49.493779494Z"
     }
   },
   "items": {
-    "wtsgbhb": {
+    "yqmobxk": {
       "value": "crimson",
-      "created": "2025-10-31T19:39:14.809939160Z"
+      "created": "2025-10-31T19:50:49.493975034Z"
     }
   },
   "rankings": []

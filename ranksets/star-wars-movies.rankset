@@ -9,45 +9,46 @@
     "u0000001": {
       "username": "<default>",
       "display_name": "<default>",
+      "default": true,
       "created": "2025-10-31T17:15:00Z",
-      "last_active": "2025-10-31T17:15:00Z"
+      "last_active": "2025-10-31T19:52:26.803437669Z"
     }
   },
   "items": {
-    "i0000007": {
-      "value": "Episode VII: The Force Awakens",
-      "created": "2025-10-31T17:15:00Z"
-    },
-    "i0000006": {
-      "value": "Episode VI: Return of the Jedi",
-      "created": "2025-10-31T17:15:00Z"
-    },
-    "i0000003": {
-      "value": "Episode III: Revenge of the Sith",
-      "created": "2025-10-31T17:15:00Z"
-    },
-    "i0000009": {
-      "value": "Episode IX: The Rise of Skywalker",
-      "created": "2025-10-31T17:15:00Z"
-    },
-    "i0000004": {
-      "value": "Episode IV: A New Hope",
+    "i0000005": {
+      "value": "Episode V: The Empire Strikes Back",
       "created": "2025-10-31T17:15:00Z"
     },
     "i0000001": {
       "value": "Episode I: The Phantom Menace",
       "created": "2025-10-31T17:15:00Z"
     },
-    "i0000002": {
-      "value": "Episode II: Attack of the Clones",
+    "i0000004": {
+      "value": "Episode IV: A New Hope",
       "created": "2025-10-31T17:15:00Z"
     },
     "i0000008": {
       "value": "Episode VIII: The Last Jedi",
       "created": "2025-10-31T17:15:00Z"
     },
-    "i0000005": {
-      "value": "Episode V: The Empire Strikes Back",
+    "i0000003": {
+      "value": "Episode III: Revenge of the Sith",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000006": {
+      "value": "Episode VI: Return of the Jedi",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000009": {
+      "value": "Episode IX: The Rise of Skywalker",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000002": {
+      "value": "Episode II: Attack of the Clones",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000007": {
+      "value": "Episode VII: The Force Awakens",
       "created": "2025-10-31T17:15:00Z"
     }
   },
@@ -100,6 +101,32 @@
           "i0000001",
           "i0000009",
           "i0000007"
+        ],
+        "ratings": null
+      }
+    },
+    {
+      "user_id": "u0000001",
+      "strategy": "merge",
+      "session": {
+        "id": "su8vf60d",
+        "created": "2025-10-31T19:52:32.549921138Z",
+        "last_updated": "2025-10-31T19:53:48.415774052Z",
+        "completed": "2025-10-31T19:53:48.415774052Z",
+        "status": "completed",
+        "comparisons": []
+      },
+      "result": {
+        "order": [
+          "i0000005",
+          "i0000004",
+          "i0000006",
+          "i0000003",
+          "i0000002",
+          "i0000001",
+          "i0000007",
+          "i0000009",
+          "i0000008"
         ],
         "ratings": null
       }

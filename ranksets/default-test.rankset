@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "name": "default-test",
+    "author": "alice",
+    "created": "2025-10-31T19:55:55.129228975Z"
+  },
+  "users": {
+    "uxjggvy2": {
+      "username": "alice",
+      "display_name": "Alice Smith",
+      "default": false,
+      "created": "2025-10-31T19:55:55.129268578Z",
+      "last_active": "2025-10-31T19:55:55.129268578Z"
+    },
+    "u1lwds7m": {
+      "username": "bob",
+      "display_name": "Bob Jones",
+      "default": true,
+      "created": "2025-10-31T19:55:55.129723123Z",
+      "last_active": "2025-10-31T19:55:55.130808191Z"
+    }
+  },
+  "items": {
+    "d3vhrk7": {
+      "value": "Blue",
+      "created": "2025-10-31T19:55:55.132754839Z"
+    },
+    "5hnoif9": {
+      "value": "Red",
+      "created": "2025-10-31T19:55:55.131346703Z"
+    }
+  },
+  "rankings": [
+    {
+      "user_id": "uxjggvy2",
+      "strategy": "merge",
+      "session": {
+        "id": "s129bgve",
+        "created": "2025-10-31T19:55:55.133065466Z",
+        "last_updated": "2025-10-31T19:55:55.133065466Z",
+        "status": "in_progress",
+        "comparisons": []
+      }
+    }
+  ]
+}

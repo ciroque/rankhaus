@@ -16,10 +16,18 @@ pub fn start(state: Option<&mut AppState>) -> Result<()> {
         .as_mut()
         .ok_or_else(|| anyhow::anyhow!("No rankset loaded. Use 'init' or 'load' first."))?;
 
-    let active_user_id = app_state
-        .active_user_id
-        .as_ref()
-        .ok_or_else(|| anyhow::anyhow!("No active user. Use 'users select <user>' first."))?;
+    // Get active user, or use default user if none selected
+    let active_user_id = if let Some(user_id) = &app_state.active_user_id {
+        user_id.clone()
+    } else {
+        // Try to find default user
+        let default_user = rankset
+            .users
+            .values()
+            .find(|u| u.default)
+            .ok_or_else(|| anyhow::anyhow!("No active user. Use 'users select <user>' or 'users default <user>' first."))?;
+        default_user.id.clone()
+    };
 
     // Check if we have items to rank
     if rankset.items.is_empty() {
@@ -32,7 +40,12 @@ pub fn start(state: Option<&mut AppState>) -> Result<()> {
 
     // Get user info
     let user = rankset.get_user(&active_user_id.to_string())?;
-    println!("\n🎯 Starting ranking session for user: {}", user.username);
+    let user_label = if user.default {
+        format!("{} [default]", user.username)
+    } else {
+        user.username.clone()
+    };
+    println!("\n🎯 Starting ranking session for user: {}", user_label);
     println!("Items to rank: {}", rankset.items.len());
     println!();
 

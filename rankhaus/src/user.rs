@@ -9,6 +9,8 @@ pub struct User {
     pub id: Id,
     pub username: String,
     pub display_name: String,
+    #[serde(default)]
+    pub default: bool,
     pub created: DateTime<Utc>,
     pub last_active: DateTime<Utc>,
 }
@@ -21,6 +23,7 @@ impl User {
             id: Id::new(Some("u")),
             username: username.clone(),
             display_name: display_name.unwrap_or(username),
+            default: false,
             created: now,
             last_active: now,
         }
@@ -33,6 +36,7 @@ impl User {
             id,
             username: username.clone(),
             display_name: display_name.unwrap_or(username),
+            default: false,
             created: now,
             last_active: now,
         }

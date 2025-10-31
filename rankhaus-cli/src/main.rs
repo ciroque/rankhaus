@@ -111,6 +111,12 @@ pub enum UsersCommands {
         /// Username or user ID
         identifier: String,
     },
+
+    /// Get or set the default user
+    Default {
+        /// Username or user ID to set as default (omit to show current default)
+        identifier: Option<String>,
+    },
 }
 
 #[derive(Subcommand)]

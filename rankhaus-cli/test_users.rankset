@@ -2,14 +2,15 @@
   "meta": {
     "name": "test",
     "author": "author",
-    "created": "2025-10-31T19:39:14.812738845Z"
+    "created": "2025-10-31T19:50:49.500030232Z"
   },
   "users": {
-    "u2ew4hhq": {
+    "uq1u4x7f": {
       "username": "alice",
       "display_name": "Alice",
-      "created": "2025-10-31T19:39:14.812744375Z",
-      "last_active": "2025-10-31T19:39:14.812744375Z"
+      "default": false,
+      "created": "2025-10-31T19:50:49.500034985Z",
+      "last_active": "2025-10-31T19:50:49.500034985Z"
     }
   },
   "items": {},
