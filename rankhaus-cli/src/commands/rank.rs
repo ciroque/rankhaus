@@ -21,11 +21,11 @@ pub fn start(state: Option<&mut AppState>) -> Result<()> {
         user_id.clone()
     } else {
         // Try to find default user
-        let default_user = rankset
-            .users
-            .values()
-            .find(|u| u.default)
-            .ok_or_else(|| anyhow::anyhow!("No active user. Use 'users select <user>' or 'users default <user>' first."))?;
+        let default_user = rankset.users.values().find(|u| u.default).ok_or_else(|| {
+            anyhow::anyhow!(
+                "No active user. Use 'users select <user>' or 'users default <user>' first."
+            )
+        })?;
         default_user.id.clone()
     };
 

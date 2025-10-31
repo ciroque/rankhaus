@@ -31,9 +31,10 @@ pub fn execute(command: UsersCommands, state: Option<&mut AppState>) -> Result<(
 
 fn list(state: Option<&mut AppState>) -> Result<()> {
     let app_state = state.ok_or_else(|| anyhow::anyhow!("No state available"))?;
-    
+
     let rankset = app_state
-        .rankset.as_ref()
+        .rankset
+        .as_ref()
         .ok_or_else(|| anyhow::anyhow!("No rankset loaded"))?;
 
     if rankset.users.is_empty() {
@@ -82,12 +83,12 @@ fn add(state: Option<&mut AppState>, username: String, display_name: Option<Stri
     }
 
     let mut user = User::new(username.clone(), display_name.clone());
-    
+
     // If this is the first user, make them default
     if rankset.users.is_empty() {
         user.default = true;
     }
-    
+
     let user_id = user.id.to_string();
     let is_default = user.default;
     rankset.add_user(user)?;
@@ -97,7 +98,10 @@ fn add(state: Option<&mut AppState>, username: String, display_name: Option<Stri
 
     let display = display_name.as_ref().unwrap_or(&username);
     if is_default {
-        println!("✓ Added user: {} ({}) - {} [default]", username, user_id, display);
+        println!(
+            "✓ Added user: {} ({}) - {} [default]",
+            username, user_id, display
+        );
     } else {
         println!("✓ Added user: {} ({}) - {}", username, user_id, display);
     }
@@ -196,7 +200,7 @@ fn default(state: Option<&mut AppState>, identifier: Option<String>) -> Result<(
     // If no identifier provided, show current default
     if identifier.is_none() {
         let default_user = rankset.users.values().find(|u| u.default);
-        
+
         if let Some(user) = default_user {
             println!("Default user: {} ({})", user.username, user.display_name);
         } else {

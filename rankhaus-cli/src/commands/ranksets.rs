@@ -83,7 +83,10 @@ fn list(state: Option<&mut AppState>) -> Result<()> {
                             description.to_string()
                         };
 
-                        println!("{} {:<29} {:<10} {}", marker, filename, items_count, desc_display);
+                        println!(
+                            "{} {:<29} {:<10} {}",
+                            marker, filename, items_count, desc_display
+                        );
                     }
                     Err(_) => {
                         println!("{} {:<29} {:<10} (invalid JSON)", marker, filename, "?");

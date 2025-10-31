@@ -6,9 +6,11 @@ use std::path::{Path, PathBuf};
 pub fn execute(file: String, state: Option<&mut AppState>) -> Result<()> {
     // Resolve the file path
     let resolved_path = resolve_rankset_path(&file);
-    
-    let list = RankSet::load(&resolved_path)
-        .context(format!("Failed to load list from {}", resolved_path.display()))?;
+
+    let list = RankSet::load(&resolved_path).context(format!(
+        "Failed to load list from {}",
+        resolved_path.display()
+    ))?;
 
     println!("✓ Loaded: {}", list.meta.name);
     println!("  Items: {}", list.items.len());
@@ -29,20 +31,20 @@ pub fn execute(file: String, state: Option<&mut AppState>) -> Result<()> {
 /// 2. Otherwise, prepend "./ranksets/" and append ".rankset" extension if needed
 fn resolve_rankset_path(file: &str) -> PathBuf {
     let path = Path::new(file);
-    
+
     // If the path exists as-is, use it
     if path.exists() {
         return path.to_path_buf();
     }
-    
+
     // Otherwise, try to resolve it in the ranksets directory
     let mut resolved = PathBuf::from("ranksets");
     resolved.push(file);
-    
+
     // Add .rankset extension if not present
     if resolved.extension().is_none() {
         resolved.set_extension("rankset");
     }
-    
+
     resolved
 }

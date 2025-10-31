@@ -176,14 +176,14 @@ impl RankStrategy for QuickSortStrategy {
         }
 
         let op_idx = self.state.partition_stack.len() - 1;
-        
+
         // First, process any cached comparisons we skipped over
         loop {
             let (current_idx, pivot_idx, items_len) = {
                 let op = &self.state.partition_stack[op_idx];
                 (op.current_idx, op.pivot_idx, op.items.len())
             };
-            
+
             if current_idx >= items_len {
                 break;
             }
@@ -216,7 +216,7 @@ impl RankStrategy for QuickSortStrategy {
         }
 
         let op = &mut self.state.partition_stack[op_idx];
-        
+
         if op.current_idx >= op.items.len() {
             self.process_partition();
             if self.state.partition_stack.is_empty() {
@@ -289,7 +289,7 @@ impl RankStrategy for QuickSortStrategy {
 
         // Find the next item that needs comparison
         let mut idx = op.current_idx;
-        
+
         while idx < op.items.len() {
             // Skip pivot itself
             if idx == op.pivot_idx {
@@ -305,7 +305,7 @@ impl RankStrategy for QuickSortStrategy {
                 // Found an item that needs comparison
                 return Some((current.clone(), pivot.clone()));
             }
-            
+
             // This item has a cached comparison, skip it
             idx += 1;
         }
@@ -446,15 +446,17 @@ mod tests {
             // Check for duplicates
             let pair1 = (a.to_string(), b.to_string());
             let pair2 = (b.to_string(), a.to_string());
-            
+
             for (prev_a, prev_b) in &comparisons {
                 assert!(
-                    !(prev_a == &pair1.0 && prev_b == &pair1.1) && 
-                    !(prev_a == &pair2.0 && prev_b == &pair2.1),
-                    "Duplicate comparison found: {:?} vs {:?}", a, b
+                    !(prev_a == &pair1.0 && prev_b == &pair1.1)
+                        && !(prev_a == &pair2.0 && prev_b == &pair2.1),
+                    "Duplicate comparison found: {:?} vs {:?}",
+                    a,
+                    b
                 );
             }
-            
+
             comparisons.push(pair1);
 
             // Always prefer lower index (simulates consistent preference)
@@ -466,9 +468,13 @@ mod tests {
 
         assert!(strategy.is_complete());
         println!("Total comparisons for 9 items: {}", comparisons.len());
-        
+
         // QuickSort should use significantly fewer than n*(n-1)/2 comparisons
         // For 9 items, worst case is 36 comparisons, but we should do much better
-        assert!(comparisons.len() < 30, "Too many comparisons: {}", comparisons.len());
+        assert!(
+            comparisons.len() < 30,
+            "Too many comparisons: {}",
+            comparisons.len()
+        );
     }
 }

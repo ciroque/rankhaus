@@ -11,48 +11,79 @@ pub fn execute(command: StrategyCommands, state: Option<&mut AppState>) -> Resul
 
 fn list(state: Option<&mut AppState>) -> Result<()> {
     let active_strategy = state.map(|s| s.active_strategy.as_str());
-    
+
     println!("Available strategies:");
-    
-    let marker = if active_strategy == Some("merge") { "*" } else { " " };
+
+    let marker = if active_strategy == Some("merge") {
+        "*"
+    } else {
+        " "
+    };
     println!("{} merge      - Merge sort (pairwise comparison)", marker);
-    
+
     #[cfg(feature = "quicksort")]
     {
-        let marker = if active_strategy == Some("quicksort") { "*" } else { " " };
-        println!("{} quicksort  - Quick sort (pivot-based partitioning)", marker);
+        let marker = if active_strategy == Some("quicksort") {
+            "*"
+        } else {
+            " "
+        };
+        println!(
+            "{} quicksort  - Quick sort (pivot-based partitioning)",
+            marker
+        );
     }
-    
+
     #[cfg(feature = "elo")]
     {
-        let marker = if active_strategy == Some("elo") { "*" } else { " " };
+        let marker = if active_strategy == Some("elo") {
+            "*"
+        } else {
+            " "
+        };
         println!("{} elo        - Elo rating system", marker);
     }
-    
+
     #[cfg(feature = "tournament")]
     {
-        let marker = if active_strategy == Some("tournament") { "*" } else { " " };
+        let marker = if active_strategy == Some("tournament") {
+            "*"
+        } else {
+            " "
+        };
         println!("{} tournament - Tournament/knockout", marker);
     }
-    
+
     #[cfg(feature = "condorcet")]
     {
-        let marker = if active_strategy == Some("condorcet") { "*" } else { " " };
+        let marker = if active_strategy == Some("condorcet") {
+            "*"
+        } else {
+            " "
+        };
         println!("{} condorcet  - Condorcet method", marker);
     }
-    
+
     #[cfg(feature = "active")]
     {
-        let marker = if active_strategy == Some("active") { "*" } else { " " };
+        let marker = if active_strategy == Some("active") {
+            "*"
+        } else {
+            " "
+        };
         println!("{} active     - Active learning", marker);
     }
-    
+
     #[cfg(feature = "btm")]
     {
-        let marker = if active_strategy == Some("btm") { "*" } else { " " };
+        let marker = if active_strategy == Some("btm") {
+            "*"
+        } else {
+            " "
+        };
         println!("{} btm        - Bradley-Terry model", marker);
     }
-    
+
     Ok(())
 }
 
