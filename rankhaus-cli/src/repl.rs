@@ -2,7 +2,10 @@ use anyhow::{Context, Result};
 use crate::commands;
 use crate::state::AppState;
 use crate::Commands;
-use std::io::{self, Write};
+use rustyline::DefaultEditor;
+use rustyline::error::ReadlineError;
+
+const HISTORY_FILE: &str = ".rankhaus_history";
 
 pub fn run() -> Result<()> {
     println!("Rankhaus REPL mode");
@@ -12,54 +15,83 @@ pub fn run() -> Result<()> {
     println!();
     
     let mut state = AppState::new();
-    let stdin = io::stdin();
+    let mut rl = DefaultEditor::new()?;
+    
+    // Load history from previous sessions
+    let _ = rl.load_history(HISTORY_FILE);
     
     loop {
-        // Print prompt
-        print!("rankhaus> ");
-        io::stdout().flush()?;
+        // Read line with history support
+        let readline = rl.readline("rankhaus> ");
         
-        // Read line
-        let mut input = String::new();
-        stdin.read_line(&mut input)?;
-        let input = input.trim();
-        
-        // Handle empty input
-        if input.is_empty() {
-            continue;
-        }
-        
-        // Handle exit
-        if input == "exit" || input == "quit" {
-            if state.has_rankset() {
-                println!("Saving...");
-                if let Err(e) = state.save() {
-                    eprintln!("Warning: Failed to save: {}", e);
+        match readline {
+            Ok(line) => {
+                let input = line.trim();
+                
+                // Handle empty input
+                if input.is_empty() {
+                    continue;
+                }
+                
+                // Add to history
+                let _ = rl.add_history_entry(input);
+                
+                // Handle exit
+                if input == "exit" || input == "quit" {
+                    if state.has_rankset() {
+                        println!("Saving...");
+                        if let Err(e) = state.save() {
+                            eprintln!("Warning: Failed to save: {}", e);
+                        }
+                    }
+                    println!("Goodbye!");
+                    break;
+                }
+                
+                // Handle help
+                if input == "help" {
+                    print_help();
+                    continue;
+                }
+                
+                // Parse and execute command
+                match parse_command(input) {
+                    Ok(command) => {
+                        if let Err(e) = commands::execute_with_state(command, &mut state) {
+                            eprintln!("Error: {}", e);
+                        }
+                    }
+                    Err(e) => {
+                        eprintln!("Error: {}", e);
+                        eprintln!("Type 'help' for available commands");
+                    }
                 }
             }
-            println!("Goodbye!");
-            break;
-        }
-        
-        // Handle help
-        if input == "help" {
-            print_help();
-            continue;
-        }
-        
-        // Parse and execute command
-        match parse_command(input) {
-            Ok(command) => {
-                if let Err(e) = commands::execute_with_state(command, &mut state) {
-                    eprintln!("Error: {}", e);
-                }
+            Err(ReadlineError::Interrupted) => {
+                // Ctrl+C
+                println!("^C");
+                continue;
             }
-            Err(e) => {
-                eprintln!("Error: {}", e);
-                eprintln!("Type 'help' for available commands");
+            Err(ReadlineError::Eof) => {
+                // Ctrl+D
+                println!("exit");
+                if state.has_rankset() {
+                    println!("Saving...");
+                    if let Err(e) = state.save() {
+                        eprintln!("Warning: Failed to save: {}", e);
+                    }
+                }
+                break;
+            }
+            Err(err) => {
+                eprintln!("Error reading line: {}", err);
+                break;
             }
         }
     }
+    
+    // Save history for next session
+    let _ = rl.save_history(HISTORY_FILE);
     
     Ok(())
 }

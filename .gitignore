@@ -4,6 +4,8 @@ Cargo.lock
 # Test files
 *.rankhaus.json
 *.rankhaus.gz
+*.rankset
+.rankhaus_history
 
 # IDE
 .idea/
