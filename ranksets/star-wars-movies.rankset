@@ -1,9 +1,8 @@
 {
   "meta": {
     "name": "star-wars-movies",
-    "display_name": "Star Wars Movies",
-    "description": "Rank all Star Wars films from the Skywalker Saga",
     "author": "System",
+    "description": "Rank all Star Wars films from the Skywalker Saga",
     "created": "2025-10-31T17:15:00Z"
   },
   "users": {
@@ -15,6 +14,26 @@
     }
   },
   "items": {
+    "i0000007": {
+      "value": "Episode VII: The Force Awakens",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000006": {
+      "value": "Episode VI: Return of the Jedi",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000003": {
+      "value": "Episode III: Revenge of the Sith",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000009": {
+      "value": "Episode IX: The Rise of Skywalker",
+      "created": "2025-10-31T17:15:00Z"
+    },
+    "i0000004": {
+      "value": "Episode IV: A New Hope",
+      "created": "2025-10-31T17:15:00Z"
+    },
     "i0000001": {
       "value": "Episode I: The Phantom Menace",
       "created": "2025-10-31T17:15:00Z"
@@ -23,34 +42,67 @@
       "value": "Episode II: Attack of the Clones",
       "created": "2025-10-31T17:15:00Z"
     },
-    "i0000003": {
-      "value": "Episode III: Revenge of the Sith",
-      "created": "2025-10-31T17:15:00Z"
-    },
-    "i0000004": {
-      "value": "Episode IV: A New Hope",
+    "i0000008": {
+      "value": "Episode VIII: The Last Jedi",
       "created": "2025-10-31T17:15:00Z"
     },
     "i0000005": {
       "value": "Episode V: The Empire Strikes Back",
       "created": "2025-10-31T17:15:00Z"
-    },
-    "i0000006": {
-      "value": "Episode VI: Return of the Jedi",
-      "created": "2025-10-31T17:15:00Z"
-    },
-    "i0000007": {
-      "value": "Episode VII: The Force Awakens",
-      "created": "2025-10-31T17:15:00Z"
-    },
-    "i0000008": {
-      "value": "Episode VIII: The Last Jedi",
-      "created": "2025-10-31T17:15:00Z"
-    },
-    "i0000009": {
-      "value": "Episode IX: The Rise of Skywalker",
-      "created": "2025-10-31T17:15:00Z"
     }
   },
-  "rankings": []
+  "rankings": [
+    {
+      "user_id": "u0000001",
+      "strategy": "quicksort",
+      "session": {
+        "id": "spos8e7o",
+        "created": "2025-10-31T19:31:43.463041910Z",
+        "last_updated": "2025-10-31T19:33:31.571454088Z",
+        "completed": "2025-10-31T19:33:31.571454088Z",
+        "status": "completed",
+        "comparisons": []
+      },
+      "result": {
+        "order": [
+          "i0000005",
+          "i0000004",
+          "i0000006",
+          "i0000003",
+          "i0000002",
+          "i0000001",
+          "i0000007",
+          "i0000009",
+          "i0000008"
+        ],
+        "ratings": null
+      }
+    },
+    {
+      "user_id": "u0000001",
+      "strategy": "quicksort",
+      "session": {
+        "id": "s4rqttpm",
+        "created": "2025-10-31T19:40:19.470978292Z",
+        "last_updated": "2025-10-31T19:41:43.264692846Z",
+        "completed": "2025-10-31T19:41:43.264692846Z",
+        "status": "completed",
+        "comparisons": []
+      },
+      "result": {
+        "order": [
+          "i0000005",
+          "i0000003",
+          "i0000006",
+          "i0000004",
+          "i0000002",
+          "i0000008",
+          "i0000001",
+          "i0000009",
+          "i0000007"
+        ],
+        "ratings": null
+      }
+    }
+  ]
 }

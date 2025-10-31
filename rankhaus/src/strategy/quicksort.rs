@@ -176,35 +176,69 @@ impl RankStrategy for QuickSortStrategy {
         }
 
         let op_idx = self.state.partition_stack.len() - 1;
-        let op = &mut self.state.partition_stack[op_idx];
+        
+        // First, process any cached comparisons we skipped over
+        loop {
+            let (current_idx, pivot_idx, items_len) = {
+                let op = &self.state.partition_stack[op_idx];
+                (op.current_idx, op.pivot_idx, op.items.len())
+            };
+            
+            if current_idx >= items_len {
+                break;
+            }
 
-        if op.current_idx >= op.items.len() {
-            return Ok(());
+            // Skip pivot itself
+            if current_idx == pivot_idx {
+                self.state.partition_stack[op_idx].current_idx += 1;
+                continue;
+            }
+
+            let (current, pivot) = {
+                let op = &self.state.partition_stack[op_idx];
+                (op.items[current_idx].clone(), op.items[pivot_idx].clone())
+            };
+
+            // Check if we have a cached comparison for this item
+            if let Some(cached_winner) = self.get_comparison(&current, &pivot) {
+                let op = &mut self.state.partition_stack[op_idx];
+                // Add to appropriate partition based on cached result
+                if cached_winner == current {
+                    op.less.push(current);
+                } else {
+                    op.greater.push(current);
+                }
+                op.current_idx += 1;
+            } else {
+                // This is the item we're comparing now
+                break;
+            }
         }
 
-        // Skip pivot itself
-        if op.current_idx == op.pivot_idx {
-            op.current_idx += 1;
-            if op.current_idx >= op.items.len() {
-                self.process_partition();
+        let op = &mut self.state.partition_stack[op_idx];
+        
+        if op.current_idx >= op.items.len() {
+            self.process_partition();
+            if self.state.partition_stack.is_empty() {
+                self.state.completed = true;
             }
             return Ok(());
         }
 
-        let current = &op.items[op.current_idx];
-        let pivot = &op.items[op.pivot_idx];
+        let current = op.items[op.current_idx].clone();
+        let pivot = op.items[op.pivot_idx].clone();
 
         // Record comparison
         let key = (current.to_string(), pivot.to_string());
         self.comparisons.insert(key, winner_id.to_string());
 
         // Add to appropriate partition
-        if winner_id == current {
+        if winner_id == &current {
             // Current is better (less) than pivot
-            op.less.push(current.clone());
+            op.less.push(current);
         } else {
             // Pivot is better, current goes to greater
-            op.greater.push(current.clone());
+            op.greater.push(current);
         }
 
         op.current_idx += 1;
@@ -253,29 +287,31 @@ impl RankStrategy for QuickSortStrategy {
 
         let op = self.state.partition_stack.last()?;
 
-        // Skip if we've processed all items
-        if op.current_idx >= op.items.len() {
-            return None;
-        }
-
-        // Skip pivot itself
+        // Find the next item that needs comparison
         let mut idx = op.current_idx;
-        if idx == op.pivot_idx {
-            idx += 1;
-            if idx >= op.items.len() {
-                return None;
+        
+        while idx < op.items.len() {
+            // Skip pivot itself
+            if idx == op.pivot_idx {
+                idx += 1;
+                continue;
             }
+
+            let current = &op.items[idx];
+            let pivot = &op.items[op.pivot_idx];
+
+            // Check if we already have this comparison
+            if self.get_comparison(current, pivot).is_none() {
+                // Found an item that needs comparison
+                return Some((current.clone(), pivot.clone()));
+            }
+            
+            // This item has a cached comparison, skip it
+            idx += 1;
         }
 
-        let current = &op.items[idx];
-        let pivot = &op.items[op.pivot_idx];
-
-        // Check if we already have this comparison
-        if self.get_comparison(current, pivot).is_some() {
-            return None;
-        }
-
-        Some((current.clone(), pivot.clone()))
+        // All items in this partition have been compared
+        None
     }
 
     fn is_complete(&self) -> bool {
@@ -395,5 +431,44 @@ mod tests {
 
         // Try to finalize before completing
         assert!(strategy.finalize().is_err());
+    }
+
+    #[test]
+    fn test_no_duplicate_comparisons() {
+        let items = create_test_items(9);
+        let ids: Vec<Id> = items.iter().map(|item| item.id.clone()).collect();
+        let mut strategy = QuickSortStrategy::new(ids.clone());
+
+        let mut comparisons = Vec::new();
+
+        // Perform comparisons until complete
+        while let Some((a, b)) = strategy.next_comparison() {
+            // Check for duplicates
+            let pair1 = (a.to_string(), b.to_string());
+            let pair2 = (b.to_string(), a.to_string());
+            
+            for (prev_a, prev_b) in &comparisons {
+                assert!(
+                    !(prev_a == &pair1.0 && prev_b == &pair1.1) && 
+                    !(prev_a == &pair2.0 && prev_b == &pair2.1),
+                    "Duplicate comparison found: {:?} vs {:?}", a, b
+                );
+            }
+            
+            comparisons.push(pair1);
+
+            // Always prefer lower index (simulates consistent preference)
+            let winner = if a.as_str() < b.as_str() { &a } else { &b };
+            let item_a = items.iter().find(|i| i.id == a).unwrap();
+            let item_b = items.iter().find(|i| i.id == b).unwrap();
+            strategy.compare(item_a, item_b, winner).unwrap();
+        }
+
+        assert!(strategy.is_complete());
+        println!("Total comparisons for 9 items: {}", comparisons.len());
+        
+        // QuickSort should use significantly fewer than n*(n-1)/2 comparisons
+        // For 9 items, worst case is 36 comparisons, but we should do much better
+        assert!(comparisons.len() < 30, "Too many comparisons: {}", comparisons.len());
     }
 }

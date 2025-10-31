@@ -7,7 +7,7 @@ use std::path::Path;
 
 pub fn execute(command: RanksetsCommands, state: Option<&mut AppState>) -> Result<()> {
     match command {
-        RanksetsCommands::List => list(),
+        RanksetsCommands::List => list(state),
         RanksetsCommands::Load { file } => load::execute(file, state),
         RanksetsCommands::New {
             name,
@@ -19,7 +19,7 @@ pub fn execute(command: RanksetsCommands, state: Option<&mut AppState>) -> Resul
     }
 }
 
-fn list() -> Result<()> {
+fn list(state: Option<&mut AppState>) -> Result<()> {
     let ranksets_dir = Path::new("ranksets");
 
     if !ranksets_dir.exists() {
@@ -46,6 +46,11 @@ fn list() -> Result<()> {
         return Ok(());
     }
 
+    // Get the currently loaded rankset path if any
+    let current_path = state
+        .and_then(|s| s.rankset.as_ref())
+        .and_then(|r| r.file_path.as_ref());
+
     println!("\n{:-<80}", "");
     println!("{:<30} {:<10} Description", "Rankset", "Items");
     println!("{:-<80}", "");
@@ -56,6 +61,10 @@ fn list() -> Result<()> {
             .file_stem()
             .and_then(|s| s.to_str())
             .unwrap_or("unknown");
+
+        // Check if this is the currently loaded rankset
+        let is_current = current_path.map(|cp| cp == &path).unwrap_or(false);
+        let marker = if is_current { "*" } else { " " };
 
         // Try to load and parse the rankset to get metadata
         match fs::read_to_string(&path) {
@@ -74,21 +83,21 @@ fn list() -> Result<()> {
                             description.to_string()
                         };
 
-                        println!("{:<30} {:<10} {}", filename, items_count, desc_display);
+                        println!("{} {:<29} {:<10} {}", marker, filename, items_count, desc_display);
                     }
                     Err(_) => {
-                        println!("{:<30} {:<10} (invalid JSON)", filename, "?");
+                        println!("{} {:<29} {:<10} (invalid JSON)", marker, filename, "?");
                     }
                 }
             }
             Err(_) => {
-                println!("{:<30} {:<10} (cannot read)", filename, "?");
+                println!("{} {:<29} {:<10} (cannot read)", marker, filename, "?");
             }
         }
     }
 
     println!();
-    println!("Load a rankset with: ranksets load ranksets/<name>.rankset");
+    println!("Load a rankset with: ranksets load <name>");
     println!();
 
     Ok(())

@@ -29,8 +29,10 @@ pub fn execute(command: UsersCommands, state: Option<&mut AppState>) -> Result<(
 }
 
 fn list(state: Option<&mut AppState>) -> Result<()> {
-    let rankset = state
-        .and_then(|s| s.rankset.as_ref())
+    let app_state = state.ok_or_else(|| anyhow::anyhow!("No state available"))?;
+    
+    let rankset = app_state
+        .rankset.as_ref()
         .ok_or_else(|| anyhow::anyhow!("No rankset loaded"))?;
 
     if rankset.users.is_empty() {
@@ -48,8 +50,14 @@ fn list(state: Option<&mut AppState>) -> Result<()> {
     println!("{:-<80}", "");
 
     for user in users {
+        let marker = if app_state.active_user_id.as_ref() == Some(&user.id) {
+            "*"
+        } else {
+            " "
+        };
         println!(
-            "{:<10} {:<20} {:<30}",
+            "{} {:<9} {:<20} {:<30}",
+            marker,
             user.id.as_str(),
             user.username,
             user.display_name
