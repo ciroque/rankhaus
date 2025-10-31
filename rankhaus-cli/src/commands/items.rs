@@ -15,8 +15,8 @@ pub fn execute(command: ItemsCommands, state: Option<&mut AppState>) -> Result<(
         ItemsCommands::List => {
             list(state)
         }
-        ItemsCommands::Add => {
-            add(state)
+        ItemsCommands::Add { item } => {
+            add(state, item)
         }
         ItemsCommands::Remove => {
             remove(state)
@@ -54,47 +54,86 @@ fn list(state: Option<&mut AppState>) -> Result<()> {
     Ok(())
 }
 
-fn add(state: Option<&mut AppState>) -> Result<()> {
-    let list = state
+fn add(state: Option<&mut AppState>, item_arg: Option<String>) -> Result<()> {
+    let rankset = state
         .and_then(|s| s.rankset.as_mut())
-        .ok_or_else(|| anyhow::anyhow!("No list loaded"))?;
+        .ok_or_else(|| anyhow::anyhow!("No rankset loaded"))?;
     
-    println!("Enter items, one per line. Press Ctrl+D (or Ctrl+Z on Windows) when done:");
-    println!();
-    
-    let stdin = io::stdin();
     let mut added = 0;
     let mut skipped = 0;
+    
+    // If item provided as argument, add it directly
+    if let Some(value) = item_arg {
+        let value = value.trim();
+        
+        if value.is_empty() {
+            bail!("Item value cannot be empty");
+        }
+        
+        // Check for duplicates
+        if rankset.items.values().any(|item| item.value == value) {
+            bail!("Item '{}' already exists", value);
+        }
+        
+        // Add the item
+        let item = Item::new(value.to_string());
+        rankset.add_item(item)?;
+        
+        // Auto-save
+        rankset.save().context("Failed to save rankset")?;
+        
+        println!("✓ Added: {}", value);
+        return Ok(());
+    }
+    
+    // Interactive mode
+    println!("Enter items (one per line, empty line to finish):");
+    print!("> ");
+    use std::io::Write;
+    io::stdout().flush()?;
+    
+    let stdin = io::stdin();
     
     for line in stdin.lock().lines() {
         let line = line.context("Failed to read line")?;
         let value = line.trim();
         
-        // Skip empty lines
+        // Empty line means done
         if value.is_empty() {
-            continue;
+            break;
         }
         
         // Check for duplicates
-        if list.items.values().any(|item| item.value == value) {
+        if rankset.items.values().any(|item| item.value == value) {
             eprintln!("⚠ Skipped duplicate: {}", value);
             skipped += 1;
+            print!("> ");
+            io::stdout().flush()?;
             continue;
         }
         
         // Add the item
         let item = Item::new(value.to_string());
-        list.add_item(item)?;
+        rankset.add_item(item)?;
+        println!("  ✓ {}", value);
         added += 1;
+        
+        // Prompt for next line
+        print!("> ");
+        io::stdout().flush()?;
     }
     
     // Auto-save
-    list.save().context("Failed to save list")?;
+    rankset.save().context("Failed to save rankset")?;
     
-    println!();
-    println!("✓ Added {} item(s)", added);
-    if skipped > 0 {
-        println!("⚠ Skipped {} duplicate(s)", skipped);
+    if added > 0 || skipped > 0 {
+        println!();
+        if added > 0 {
+            println!("✓ Added {} item(s)", added);
+        }
+        if skipped > 0 {
+            println!("⚠ Skipped {} duplicate(s)", skipped);
+        }
     }
     
     Ok(())

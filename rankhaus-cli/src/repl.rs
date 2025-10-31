@@ -65,15 +65,16 @@ pub fn run() -> Result<()> {
 }
 
 fn parse_command(input: &str) -> Result<Commands> {
-    // Split input into args
-    let args: Vec<&str> = input.split_whitespace().collect();
+    // Use shlex to properly parse shell-like input (handles quotes, escapes, etc.)
+    let args = shlex::split(input)
+        .ok_or_else(|| anyhow::anyhow!("Failed to parse command line"))?;
     
     if args.is_empty() {
         anyhow::bail!("No command provided");
     }
     
     // Build clap args with program name
-    let mut clap_args = vec!["rankhaus"];
+    let mut clap_args = vec!["rankhaus".to_string()];
     clap_args.extend(args);
     
     // Parse with clap

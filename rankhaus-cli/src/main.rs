@@ -73,8 +73,11 @@ pub enum ItemsCommands {
     /// List all items
     List,
     
-    /// Add items from stdin
-    Add,
+    /// Add an item or enter interactive mode
+    Add {
+        /// Item to add. If omitted, enters interactive mode.
+        item: Option<String>,
+    },
     
     /// Remove items by name
     Remove,
