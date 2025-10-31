@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "name": "test",
+    "type": "rankset",
+    "author": "author",
+    "description": "description",
+    "created": "2025-10-31T04:22:34.358599259Z"
+  },
+  "users": {
+    "u1r3s4jn": {
+      "id": "u1r3s4jn",
+      "username": "testuser",
+      "display_name": "testuser",
+      "created": "2025-10-31T04:22:34.358610773Z",
+      "last_active": "2025-10-31T04:22:34.358610773Z"
+    }
+  },
+  "items": {
+    "6r5tr91": {
+      "id": "6r5tr91",
+      "value": "crimson",
+      "created": "2025-10-31T04:22:34.358864930Z"
+    }
+  },
+  "rankings": []
+}

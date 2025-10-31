@@ -27,7 +27,7 @@ fn cleanup(path: &str) {
 
 #[test]
 fn test_init_command() {
-    let filename = "test_init.rankhaus.json";
+    let filename = "test_init.rankset";
     cleanup(filename);
     
     let (stdout, _stderr, code) = run_cli(&[
@@ -49,7 +49,7 @@ fn test_init_command() {
 
 #[test]
 fn test_load_command() {
-    let filename = "test_load.rankhaus.json";
+    let filename = "test_load.rankset";
     cleanup(filename);
     
     // First create a list

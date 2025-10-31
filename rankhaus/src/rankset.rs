@@ -320,7 +320,7 @@ mod tests {
         rankset.add_item(Item::new("blue".to_string())).unwrap();
         rankset.add_user(User::new("alice".to_string(), None)).unwrap();
         
-        let path = "test_save_load.rankhaus.json";
+        let path = "test_save_load.rankset";
         rankset.file_path = Some(path.into());
         rankset.save().unwrap();
         

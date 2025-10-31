@@ -170,7 +170,7 @@ mod tests {
             "author".to_string(),
             "description".to_string(),
         );
-        rankset.file_path = Some(PathBuf::from("test_users.rankhaus.json"));
+        rankset.file_path = Some(PathBuf::from("test_users.rankset"));
         
         let user = User::new("alice".to_string(), Some("Alice".to_string()));
         rankset.add_user(user).unwrap();

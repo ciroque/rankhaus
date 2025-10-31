@@ -240,7 +240,7 @@ mod tests {
             "author".to_string(),
             "description".to_string(),
         );
-        list.file_path = Some(PathBuf::from("test_items.rankhaus.json"));
+        list.file_path = Some(PathBuf::from("test_items.rankset"));
         
         let user = User::new("testuser".to_string(), None);
         list.add_user(user).unwrap();

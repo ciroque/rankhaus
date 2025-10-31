@@ -46,7 +46,7 @@ pub fn execute(
     list.add_user(user)?;
     
     // Set the file path
-    let filename = format!("{}.rankhaus.json", name);
+    let filename = format!("{}.rankset", name);
     list.file_path = Some(PathBuf::from(&filename));
     
     // Save the list
