@@ -23,7 +23,7 @@ impl Ranking {
             result: None,
         }
     }
-    
+
     /// Check if this ranking is complete
     pub fn is_complete(&self) -> bool {
         self.result.is_some()

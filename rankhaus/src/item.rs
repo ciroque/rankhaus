@@ -20,7 +20,7 @@ impl Item {
             created: Utc::now(),
         }
     }
-    
+
     /// Create an item with a specific ID (for deserialization)
     pub fn with_id(id: Id, value: String, created: DateTime<Utc>) -> Self {
         Self { id, value, created }
@@ -30,7 +30,7 @@ impl Item {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_item_creation() {
         let item = Item::new("test".to_string());

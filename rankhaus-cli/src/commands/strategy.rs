@@ -1,15 +1,11 @@
-use anyhow::{bail, Result};
 use crate::state::AppState;
 use crate::StrategyCommands;
+use anyhow::{bail, Result};
 
 pub fn execute(command: StrategyCommands, _state: Option<&mut AppState>) -> Result<()> {
     match command {
-        StrategyCommands::List => {
-            list()
-        }
-        StrategyCommands::Select { strategy } => {
-            select(strategy)
-        }
+        StrategyCommands::List => list(),
+        StrategyCommands::Select { strategy } => select(strategy),
     }
 }
 

@@ -21,28 +21,28 @@ pub enum Commands {
         #[command(subcommand)]
         command: RanksetsCommands,
     },
-    
+
     /// Manage items in the current list
     Items {
         #[command(subcommand)]
         command: ItemsCommands,
     },
-    
+
     /// Manage users
     Users {
         #[command(subcommand)]
         command: UsersCommands,
     },
-    
+
     /// Manage ranking strategies
     Strategies {
         #[command(subcommand)]
         command: StrategyCommands,
     },
-    
+
     /// Perform ranking
     Rank,
-    
+
     /// Manage ranking sessions
     Sessions {
         #[command(subcommand)]
@@ -54,21 +54,21 @@ pub enum Commands {
 pub enum ItemsCommands {
     /// List all items
     List,
-    
+
     /// Add an item or enter interactive mode
     Add {
         /// Item to add. If omitted, enters interactive mode.
         item: Option<String>,
     },
-    
+
     /// Remove items by name
     Remove,
-    
+
     /// Edit an item's value
     Edit {
         /// Item identifier (ID or value)
         identifier: String,
-        
+
         /// New value
         new_value: String,
     },
@@ -78,34 +78,34 @@ pub enum ItemsCommands {
 pub enum UsersCommands {
     /// List all users
     List,
-    
+
     /// Add a new user
     Add {
         /// Username
         username: String,
-        
+
         #[arg(long)]
         display_name: Option<String>,
     },
-    
+
     /// Remove a user
     Remove {
         /// Username or user ID
         identifier: String,
-        
+
         #[arg(long)]
         cascade: bool,
     },
-    
+
     /// Edit a user's display name
     Edit {
         /// Username or user ID
         identifier: String,
-        
+
         /// New display name
         new_display_name: String,
     },
-    
+
     /// Select active user for session
     Select {
         /// Username or user ID
@@ -117,7 +117,7 @@ pub enum UsersCommands {
 pub enum StrategyCommands {
     /// List available strategies
     List,
-    
+
     /// Select a strategy
     Select {
         /// Strategy name
@@ -129,27 +129,27 @@ pub enum StrategyCommands {
 pub enum RanksetsCommands {
     /// List available ranksets in ./ranksets/ directory
     List,
-    
+
     /// Load an existing rankset
     Load {
         /// Path to the rankset file
         file: String,
     },
-    
+
     /// Create a new ranking list
     New {
         /// Name of the list
         name: String,
-        
+
         #[arg(long)]
         user: Option<String>,
-        
+
         #[arg(long)]
         display_name: Option<String>,
-        
+
         #[arg(long)]
         description: Option<String>,
-        
+
         #[arg(long)]
         author: Option<String>,
     },
@@ -159,19 +159,19 @@ pub enum RanksetsCommands {
 pub enum SessionsCommands {
     /// List all sessions
     List,
-    
+
     /// Show session details
     Show {
         /// Session ID
         session_id: String,
     },
-    
+
     /// Delete a session
     Delete {
         /// Session ID
         session_id: String,
     },
-    
+
     /// Resume an in-progress session
     Resume {
         /// Session ID to resume
@@ -181,7 +181,7 @@ pub enum SessionsCommands {
 
 fn main() -> Result<()> {
     let cli = Cli::parse();
-    
+
     match cli.command {
         None => {
             // No command provided - enter REPL mode
@@ -192,6 +192,6 @@ fn main() -> Result<()> {
             commands::execute(command)?;
         }
     }
-    
+
     Ok(())
 }

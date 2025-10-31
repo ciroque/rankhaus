@@ -12,11 +12,11 @@ fn run_cli(args: &[&str]) -> (String, String, i32) {
         .args(args)
         .output()
         .expect("Failed to execute command");
-    
+
     let stdout = String::from_utf8_lossy(&output.stdout).to_string();
     let stderr = String::from_utf8_lossy(&output.stderr).to_string();
     let code = output.status.code().unwrap_or(-1);
-    
+
     (stdout, stderr, code)
 }
 
@@ -27,55 +27,57 @@ fn cleanup(path: &str) {
 
 #[test]
 fn test_init_command() {
-    let filename = "test_init.rankset";
+    let filename = "ranksets/test_init.rankset";
     cleanup(filename);
-    
+
     let (stdout, _stderr, code) = run_cli(&[
-        "init",
+        "ranksets",
+        "new",
         "test_init",
         "--user",
         "testuser",
         "--display-name",
         "Test User",
     ]);
-    
+
     assert_eq!(code, 0);
     assert!(stdout.contains("✓ Created"));
     assert!(stdout.contains(filename));
     assert!(PathBuf::from(filename).exists());
-    
+
     cleanup(filename);
 }
 
 #[test]
 fn test_load_command() {
-    let filename = "test_load.rankset";
+    let filename = "ranksets/test_load.rankset";
     cleanup(filename);
-    
+
     // First create a list
     run_cli(&[
-        "init",
+        "ranksets",
+        "new",
         "test_load",
         "--user",
         "alice",
         "--display-name",
         "Alice",
     ]);
-    
+
     // Then load it
-    let (stdout, _stderr, code) = run_cli(&["load", filename]);
-    
+    let (stdout, _stderr, code) = run_cli(&["ranksets", "load", filename]);
+
     assert_eq!(code, 0);
     assert!(stdout.contains("✓ Loaded"));
     assert!(stdout.contains("test_load"));
-    
+
     cleanup(filename);
 }
 
 #[test]
 fn test_strategies_list() {
     let (stdout, _stderr, code) = run_cli(&["strategies", "list"]);
-    
+
     assert_eq!(code, 0);
     assert!(stdout.contains("Available strategies"));
     assert!(stdout.contains("merge"));
@@ -84,7 +86,7 @@ fn test_strategies_list() {
 #[test]
 fn test_no_list_loaded_error() {
     let (stdout, stderr, code) = run_cli(&["items", "list"]);
-    
+
     assert_ne!(code, 0);
     let output = format!("{}{}", stdout, stderr);
     assert!(output.contains("No list loaded"));

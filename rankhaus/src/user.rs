@@ -25,7 +25,7 @@ impl User {
             last_active: now,
         }
     }
-    
+
     /// Create a user with a specific ID (for testing/loading)
     pub fn with_id(id: Id, username: String, display_name: Option<String>) -> Self {
         let now = Utc::now();
@@ -37,7 +37,7 @@ impl User {
             last_active: now,
         }
     }
-    
+
     /// Update the last active timestamp
     pub fn touch(&mut self) {
         self.last_active = Utc::now();
@@ -47,7 +47,7 @@ impl User {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_user_creation() {
         let user = User::new("alice".to_string(), None);
@@ -55,22 +55,22 @@ mod tests {
         assert_eq!(user.display_name, "alice");
         assert!(user.id.as_str().starts_with("u"));
     }
-    
+
     #[test]
     fn test_user_with_display_name() {
         let user = User::new("alice".to_string(), Some("Alice Smith".to_string()));
         assert_eq!(user.username, "alice");
         assert_eq!(user.display_name, "Alice Smith");
     }
-    
+
     #[test]
     fn test_user_touch() {
         let mut user = User::new("alice".to_string(), None);
         let original_time = user.last_active;
-        
+
         std::thread::sleep(std::time::Duration::from_millis(10));
         user.touch();
-        
+
         assert!(user.last_active > original_time);
     }
 }

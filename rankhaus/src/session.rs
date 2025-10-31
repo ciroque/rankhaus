@@ -34,12 +34,12 @@ impl SessionInfo {
             status: SessionStatus::InProgress,
         }
     }
-    
+
     /// Mark the session as updated
     pub fn touch(&mut self) {
         self.last_updated = Utc::now();
     }
-    
+
     /// Mark the session as completed
     pub fn complete(&mut self) {
         let now = Utc::now();
@@ -83,7 +83,7 @@ impl Session {
             state: None,
         }
     }
-    
+
     /// Add a comparison to the session
     pub fn add_comparison(&mut self, a: Id, b: Id, winner: Id) {
         self.comparisons.push(Comparison {
