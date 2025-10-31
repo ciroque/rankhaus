@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::fmt;
+use std::str::FromStr;
 
 /// A 7-character alphanumeric identifier
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -52,6 +53,20 @@ impl From<String> for Id {
 impl From<&str> for Id {
     fn from(s: &str) -> Self {
         Self(s.to_string())
+    }
+}
+
+impl Default for Id {
+    fn default() -> Self {
+        Self(String::new())
+    }
+}
+
+impl FromStr for Id {
+    type Err = std::convert::Infallible;
+    
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(Self(s.to_string()))
     }
 }
 

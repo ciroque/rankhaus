@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 /// An item to be ranked
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Item {
+    #[serde(skip)]
     pub id: Id,
     pub value: String,
     pub created: DateTime<Utc>,

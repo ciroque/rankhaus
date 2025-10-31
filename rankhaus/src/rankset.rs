@@ -50,6 +50,15 @@ impl RankSet {
         let content = std::fs::read_to_string(&path)?;
         let mut rankset: RankSet = serde_json::from_str(&content)?;
         rankset.file_path = Some(path.as_ref().to_path_buf());
+        
+        // Reconstruct IDs from HashMap keys (since they're not serialized)
+        for (key, item) in rankset.items.iter_mut() {
+            item.id = key.parse().map_err(|_| Error::Other(format!("Invalid item ID: {}", key)))?;
+        }
+        for (key, user) in rankset.users.iter_mut() {
+            user.id = key.parse().map_err(|_| Error::Other(format!("Invalid user ID: {}", key)))?;
+        }
+        
         Ok(rankset)
     }
     

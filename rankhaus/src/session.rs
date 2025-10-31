@@ -1,7 +1,6 @@
 use crate::Id;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
-use uuid::Uuid;
 
 /// Status of a ranking session
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -15,7 +14,7 @@ pub enum SessionStatus {
 /// Metadata about a ranking session
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SessionInfo {
-    pub id: Uuid,
+    pub id: Id,
     pub created: DateTime<Utc>,
     pub last_updated: DateTime<Utc>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,7 +27,7 @@ impl SessionInfo {
     pub fn new() -> Self {
         let now = Utc::now();
         Self {
-            id: Uuid::new_v4(),
+            id: Id::new(Some("s")),
             created: now,
             last_updated: now,
             completed: None,

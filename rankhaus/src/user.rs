@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 /// A user who can create rankings
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct User {
+    #[serde(skip)]
     pub id: Id,
     pub username: String,
     pub display_name: String,
