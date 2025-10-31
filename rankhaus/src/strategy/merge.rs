@@ -27,6 +27,10 @@ struct MergeOp {
     left_idx: usize,
     right_idx: usize,
     result: Vec<Id>,
+    /// Index of the merge operation that produces the left input (if any)
+    left_source: Option<usize>,
+    /// Index of the merge operation that produces the right input (if any)
+    right_source: Option<usize>,
 }
 
 impl MergeStrategy {
@@ -55,47 +59,53 @@ impl MergeStrategy {
     }
     
     fn initialize_merge_sort(&mut self) {
-        // Start with singleton lists
+        // Start with singleton lists - these are already "sorted"
         let mut sublists: Vec<Vec<Id>> = self.items.iter()
             .map(|id| vec![id.clone()])
             .collect();
         
-        // Build merge operations bottom-up
+        // Track which merge operation index produces each sublist
+        let mut sublist_sources: Vec<Option<usize>> = vec![None; sublists.len()];
+        
+        // Build merge operations level by level, bottom-up
         while sublists.len() > 1 {
             let mut next_level = Vec::new();
+            let mut next_sources = Vec::new();
             let mut i = 0;
             
             while i < sublists.len() {
                 if i + 1 < sublists.len() {
-                    // Pair exists, create merge operation
+                    // Pair exists, create merge operation for these TWO SORTED lists
+                    let op_idx = self.state.merge_stack.len();
                     let op = MergeOp {
                         left: sublists[i].clone(),
                         right: sublists[i + 1].clone(),
                         left_idx: 0,
                         right_idx: 0,
                         result: Vec::new(),
+                        left_source: sublist_sources[i],
+                        right_source: sublist_sources[i + 1],
                     };
                     self.state.merge_stack.push(op);
                     
-                    // Placeholder for merged result (will be filled by comparisons)
+                    // The result will be filled by comparisons
                     let mut merged = Vec::new();
                     merged.extend(sublists[i].iter().cloned());
                     merged.extend(sublists[i + 1].iter().cloned());
                     next_level.push(merged);
+                    next_sources.push(Some(op_idx));
                     i += 2;
                 } else {
-                    // Odd one out, carry forward as-is
+                    // Odd one out, carry forward as-is (already sorted)
                     next_level.push(sublists[i].clone());
+                    next_sources.push(sublist_sources[i]);
                     i += 1;
                 }
             }
             
             sublists = next_level;
+            sublist_sources = next_sources;
         }
-        
-        // The final result should be in sublists[0] once all merges complete
-        // Reverse so we process merges in order
-        self.state.merge_stack.reverse();
     }
     
     fn get_comparison_key(&self, a: &Id, b: &Id) -> (String, String) {
@@ -179,7 +189,49 @@ impl MergeStrategy {
         let comparisons = &self.comparisons;
         let mut completed_ops = Vec::new();
         
+        // First pass: update inputs from completed source operations
+        for idx in 0..self.state.merge_stack.len() {
+            let (left_source, right_source) = {
+                let op = &self.state.merge_stack[idx];
+                (op.left_source, op.right_source)
+            };
+            
+            // Update left input if it comes from a completed merge AND hasn't been updated yet
+            if let Some(source_idx) = left_source {
+                if self.state.merge_stack[source_idx].left_idx == self.state.merge_stack[source_idx].left.len() &&
+                   self.state.merge_stack[source_idx].right_idx == self.state.merge_stack[source_idx].right.len() &&
+                   !self.state.merge_stack[source_idx].result.is_empty() {
+                    let result = self.state.merge_stack[source_idx].result.clone();
+                    // Only update if we haven't started this merge yet
+                    if self.state.merge_stack[idx].left_idx == 0 && self.state.merge_stack[idx].result.is_empty() {
+                        self.state.merge_stack[idx].left = result;
+                        self.state.merge_stack[idx].left_source = None; // Mark as updated
+                    }
+                }
+            }
+            
+            // Update right input if it comes from a completed merge AND hasn't been updated yet
+            if let Some(source_idx) = right_source {
+                if self.state.merge_stack[source_idx].left_idx == self.state.merge_stack[source_idx].left.len() &&
+                   self.state.merge_stack[source_idx].right_idx == self.state.merge_stack[source_idx].right.len() &&
+                   !self.state.merge_stack[source_idx].result.is_empty() {
+                    let result = self.state.merge_stack[source_idx].result.clone();
+                    // Only update if we haven't started this merge yet
+                    if self.state.merge_stack[idx].right_idx == 0 && self.state.merge_stack[idx].result.is_empty() {
+                        self.state.merge_stack[idx].right = result;
+                        self.state.merge_stack[idx].right_source = None; // Mark as updated
+                    }
+                }
+            }
+        }
+        
+        // Second pass: process merges (only if their inputs are ready)
         for (idx, op) in self.state.merge_stack.iter_mut().enumerate() {
+            // Skip if this operation depends on incomplete sources
+            if op.left_source.is_some() || op.right_source.is_some() {
+                continue;
+            }
+            
             let mut made_progress = true;
             
             while made_progress && op.left_idx < op.left.len() && op.right_idx < op.right.len() {
@@ -206,14 +258,18 @@ impl MergeStrategy {
                 }
             }
             
-            // Add remaining items
-            while op.left_idx < op.left.len() {
-                op.result.push(op.left[op.left_idx].clone());
-                op.left_idx += 1;
-            }
-            while op.right_idx < op.right.len() {
-                op.result.push(op.right[op.right_idx].clone());
-                op.right_idx += 1;
+            // Append remaining *only* if one side is exhausted
+            if op.left_idx == op.left.len() {
+                while op.right_idx < op.right.len() {
+                    op.result.push(op.right[op.right_idx].clone());
+                    op.right_idx += 1;
+                }
+            } else if op.right_idx == op.right.len() {
+                while op.left_idx < op.left.len() {
+                    op.result.push(op.left[op.left_idx].clone());
+                    op.left_idx += 1;
+                }
+                // No else: if both have remainders, stay stuck until comparison arrives
             }
             
             // Check if this operation is complete
@@ -222,13 +278,13 @@ impl MergeStrategy {
             }
         }
         
-        // Check if all operations are complete
-        if !self.state.merge_stack.is_empty() && 
-           completed_ops.len() == self.state.merge_stack.len() {
-            // The final sorted result is in the FIRST operation (after reversing)
+        // Check if the top-level merge (LAST operation in stack) is complete
+        let last_idx = self.state.merge_stack.len().saturating_sub(1);
+        if !self.state.merge_stack.is_empty() && completed_ops.contains(&last_idx) {
+            // The final sorted result is in the LAST operation
             // which represents the top-level merge
-            if let Some(first_op) = self.state.merge_stack.first() {
-                self.state.sorted = first_op.result.clone();
+            if let Some(last_op) = self.state.merge_stack.last() {
+                self.state.sorted = last_op.result.clone();
                 self.state.completed = true;
             }
         }
@@ -386,6 +442,60 @@ mod tests {
         let mut strategy = MergeStrategy::new(ids);
         let result = strategy.finalize();
         assert!(result.is_err());
+    }
+    
+    #[test]
+    fn test_six_items() {
+        let items = create_test_items(6);
+        let ids: Vec<Id> = items.iter().map(|item| item.id.clone()).collect();
+        
+        let mut strategy = MergeStrategy::new(ids.clone());
+        
+        // Debug: print merge stack structure
+        println!("Merge stack has {} operations:", strategy.state.merge_stack.len());
+        for (i, op) in strategy.state.merge_stack.iter().enumerate() {
+            println!("  Op {}: left={:?}, right={:?}", i, 
+                op.left.iter().map(|id| id.to_string()).collect::<Vec<_>>(),
+                op.right.iter().map(|id| id.to_string()).collect::<Vec<_>>());
+        }
+        
+        let mut comparison_count = 0;
+        while let Some((a_id, b_id)) = strategy.next_comparison() {
+            let a = items.iter().find(|item| item.id == a_id).unwrap();
+            let b = items.iter().find(|item| item.id == b_id).unwrap();
+            
+            let winner = if a.value < b.value { a } else { b };
+            strategy.compare(a, b, &winner.id).unwrap();
+            
+            comparison_count += 1;
+            println!("Comparison {}: {} vs {} -> {}", comparison_count, a.value, b.value, winner.value);
+            println!("  Complete: {}", strategy.is_complete());
+            
+            // Debug: show which operations are ready
+            let ready_ops: Vec<usize> = strategy.state.merge_stack.iter().enumerate()
+                .filter(|(_, op)| op.left_source.is_none() && op.right_source.is_none())
+                .map(|(i, _)| i)
+                .collect();
+            println!("  Ready ops: {:?}", ready_ops);
+            
+            if comparison_count > 30 {
+                panic!("Too many comparisons");
+            }
+        }
+        
+        println!("Total comparisons: {}", comparison_count);
+        assert!(strategy.is_complete());
+        assert!(comparison_count >= 8); // Should need at least 8 comparisons for 6 items
+        assert!(comparison_count <= 15); // But not more than 15
+        
+        let result = strategy.finalize().unwrap();
+        let order = result.order.unwrap();
+        assert_eq!(order.len(), 6);
+        
+        // Verify order is correct
+        for i in 0..6 {
+            assert_eq!(order[i], items[i].id);
+        }
     }
     
     #[test]
