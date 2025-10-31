@@ -11,7 +11,7 @@ pub fn run() -> Result<()> {
     println!("Rankhaus REPL mode");
     println!("Type 'help' for available commands, 'exit' to quit");
     println!();
-    println!("No list loaded. Use 'init <name>' or 'load <file>' to begin.");
+    println!("No list loaded. Use 'ranksets list' to see examples or 'ranksets new <name>' to create one.");
     println!();
     
     let mut state = AppState::new();
@@ -120,8 +120,9 @@ fn parse_command(input: &str) -> Result<Commands> {
 fn print_help() {
     println!("Available commands:");
     println!();
-    println!("  init <name>                Initialize a new ranking list");
-    println!("  load <file>                Load an existing list");
+    println!("  ranksets list              List available ranksets");
+    println!("  ranksets load <file>       Load an existing rankset");
+    println!("  ranksets new <name>        Create a new ranking list");
     println!();
     println!("  items list                 List all items");
     println!("  items add [item]           Add item(s) (direct or interactive)");

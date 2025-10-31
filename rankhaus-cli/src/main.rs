@@ -16,28 +16,10 @@ pub struct Cli {
 
 #[derive(Subcommand)]
 pub enum Commands {
-    /// Initialize a new ranking list
-    Init {
-        /// Name of the list
-        name: String,
-        
-        #[arg(long)]
-        user: Option<String>,
-        
-        #[arg(long)]
-        display_name: Option<String>,
-        
-        #[arg(long)]
-        description: Option<String>,
-        
-        #[arg(long)]
-        author: Option<String>,
-    },
-    
-    /// Load an existing ranking list
-    Load {
-        /// Path to the list file
-        file: String,
+    /// Manage ranksets
+    Ranksets {
+        #[command(subcommand)]
+        command: RanksetsCommands,
     },
     
     /// Manage items in the current list
@@ -140,6 +122,36 @@ pub enum StrategyCommands {
     Select {
         /// Strategy name
         strategy: String,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum RanksetsCommands {
+    /// List available ranksets in ./ranksets/ directory
+    List,
+    
+    /// Load an existing rankset
+    Load {
+        /// Path to the rankset file
+        file: String,
+    },
+    
+    /// Create a new ranking list
+    New {
+        /// Name of the list
+        name: String,
+        
+        #[arg(long)]
+        user: Option<String>,
+        
+        #[arg(long)]
+        display_name: Option<String>,
+        
+        #[arg(long)]
+        description: Option<String>,
+        
+        #[arg(long)]
+        author: Option<String>,
     },
 }
 

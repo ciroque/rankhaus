@@ -11,47 +11,14 @@ pub fn execute(
     author: Option<String>,
     state: Option<&mut AppState>,
 ) -> Result<()> {
-    // Prompt for username if not provided
-    let username = if let Some(u) = user {
-        u
-    } else {
-        inquire::Text::new("Enter your username:")
-            .prompt()
-            .context("Failed to read username")?
-    };
+    // Use provided username or default to "<default>"
+    let username = user.unwrap_or_else(|| "<default>".to_string());
     
-    // Prompt for display name if not provided
-    let user_display_name = if let Some(d) = display_name {
-        Some(d)
-    } else {
-        let prompt = inquire::Text::new("Enter display name (optional):")
-            .with_default(&username)
-            .prompt()
-            .context("Failed to read display name")?;
-        if prompt == username {
-            None
-        } else {
-            Some(prompt)
-        }
-    };
+    // Use provided display name or default to username
+    let user_display_name = display_name.or_else(|| Some(username.clone()));
     
-    // Prompt for description if not provided (only in interactive mode)
-    let list_description = if let Some(d) = description {
-        Some(d)
-    } else if state.is_some() {
-        // In REPL mode, prompt for description
-        let prompt = inquire::Text::new("Enter RankSet description (optional):")
-            .prompt()
-            .context("Failed to read description")?;
-        if prompt.trim().is_empty() {
-            None
-        } else {
-            Some(prompt)
-        }
-    } else {
-        // In direct mode, no description
-        None
-    };
+    // Use provided description or none
+    let list_description = description;
     
     // Create the list
     let list_author = author.unwrap_or_else(|| username.clone());
@@ -62,14 +29,22 @@ pub fn execute(
     let user_id = user.id.to_string();
     list.add_user(user)?;
     
-    // Set the file path
+    // Set the file path to ranksets directory
     let filename = format!("{}.rankset", name);
-    list.file_path = Some(PathBuf::from(&filename));
+    let filepath = PathBuf::from("ranksets").join(&filename);
+    
+    // Create ranksets directory if it doesn't exist
+    if let Some(parent) = filepath.parent() {
+        std::fs::create_dir_all(parent)
+            .context("Failed to create ranksets directory")?;
+    }
+    
+    list.file_path = Some(filepath.clone());
     
     // Save the list
     list.save()?;
     
-    println!("✓ Created: {}", filename);
+    println!("✓ Created: {}", filepath.display());
     println!("✓ Active user: {} ({})", username, user_id);
     
     // If in REPL mode, load the list into state
@@ -79,8 +54,8 @@ pub fn execute(
         println!("✓ RankSet loaded into session");
     } else {
         println!("\nNext steps:");
-        println!("  rankhaus load {}      # Load the list", filename);
-        println!("  rankhaus items add         # Add items to rank");
+        println!("  rankhaus ranksets load {}  # Load the rankset", filepath.display());
+        println!("  rankhaus items add              # Add items to rank");
     }
     
     Ok(())

@@ -9,15 +9,13 @@ mod users;
 mod strategy;
 mod sessions;
 mod rank;
+mod ranksets;
 
 /// Execute command in direct mode (no state)
 pub fn execute(command: Commands) -> Result<()> {
     match command {
-        Commands::Init { name, user, display_name, description, author } => {
-            init::execute(name, user, display_name, description, author, None)
-        }
-        Commands::Load { file } => {
-            load::execute(file, None)
+        Commands::Ranksets { command } => {
+            ranksets::execute(command, None)
         }
         Commands::Items { command } => {
             items::execute(command, None)
@@ -40,11 +38,8 @@ pub fn execute(command: Commands) -> Result<()> {
 /// Execute command in REPL mode (with state)
 pub fn execute_with_state(command: Commands, state: &mut AppState) -> Result<()> {
     match command {
-        Commands::Init { name, user, display_name, description, author } => {
-            init::execute(name, user, display_name, description, author, Some(state))
-        }
-        Commands::Load { file } => {
-            load::execute(file, Some(state))
+        Commands::Ranksets { command } => {
+            ranksets::execute(command, Some(state))
         }
         Commands::Items { command } => {
             items::execute(command, Some(state))
