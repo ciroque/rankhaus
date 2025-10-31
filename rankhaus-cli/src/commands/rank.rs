@@ -33,6 +33,17 @@ pub fn execute(state: Option<&mut AppState>) -> Result<()> {
     let item_ids: Vec<_> = rankset.items.keys().map(|k| k.clone().into()).collect();
     let mut strategy = MergeStrategy::new(item_ids);
     
+    // Create ranking object to track session
+    let mut ranking = Ranking::new(
+        active_user_id.clone(),
+        app_state.active_strategy.clone(),
+    );
+    let session_id = ranking.session.info.id.clone();
+    
+    // Estimate total comparisons for merge sort (worst case: n * log2(n))
+    let n = rankset.items.len() as f64;
+    let estimated_total = (n * n.log2()).ceil() as usize;
+    
     // Perform comparisons
     let mut comparison_count = 0;
     while let Some((a_id, b_id)) = strategy.next_comparison() {
@@ -41,7 +52,7 @@ pub fn execute(state: Option<&mut AppState>) -> Result<()> {
         
         // Display comparison
         println!("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        println!("  Comparison #{}", comparison_count + 1);
+        println!("  Comparison {} of ~{}", comparison_count + 1, estimated_total);
         println!("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         println!();
         println!("  1️⃣  {}", item_a.value);
@@ -69,7 +80,17 @@ pub fn execute(state: Option<&mut AppState>) -> Result<()> {
         let winner = if choice == 1 { item_a } else { item_b };
         strategy.compare(item_a, item_b, &winner.id)?;
         
+        // Record comparison in session
+        ranking.session.add_comparison(item_a.id.clone(), item_b.id.clone(), winner.id.clone());
+        
         comparison_count += 1;
+        
+        // Save progress after each comparison
+        // Remove existing session if it exists, then add updated one
+        rankset.rankings.retain(|r| r.session.info.id != session_id);
+        rankset.rankings.push(ranking.clone());
+        rankset.save().context("Failed to save progress")?;
+        
         println!();
     }
     
@@ -77,14 +98,15 @@ pub fn execute(state: Option<&mut AppState>) -> Result<()> {
     let result = strategy.finalize()?;
     let order = result.order.as_ref().ok_or_else(|| anyhow::anyhow!("No ranking order produced"))?;
     
-    // Create ranking object
-    let mut ranking = Ranking::new(
-        active_user_id.clone(),
-        app_state.active_strategy.clone(),
-    );
+    // Update ranking with final result and mark as complete
     ranking.result = Some(result.clone());
+    ranking.session.info.complete();
     
-    // Save ranking
+    // Clear comparisons now that ranking is complete (save space)
+    ranking.session.comparisons.clear();
+    
+    // Save final ranking
+    rankset.rankings.retain(|r| r.session.info.id != session_id);
     rankset.rankings.push(ranking);
     rankset.save().context("Failed to save rankset")?;
     

@@ -14,132 +14,132 @@
     }
   },
   "items": {
-    "i0000002": {
-      "value": "Atlanta Falcons",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000022": {
-      "value": "New England Patriots",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000005": {
-      "value": "Carolina Panthers",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000021": {
-      "value": "Minnesota Vikings",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000009": {
-      "value": "Dallas Cowboys",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000031": {
-      "value": "Tennessee Titans",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000012": {
-      "value": "Green Bay Packers",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000001": {
-      "value": "Arizona Cardinals",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000025": {
-      "value": "New York Jets",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000023": {
-      "value": "New Orleans Saints",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000007": {
-      "value": "Cincinnati Bengals",
-      "created": "2025-10-31T05:16:00Z"
-    },
     "i0000011": {
       "value": "Detroit Lions",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000032": {
-      "value": "Washington Commanders",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000029": {
-      "value": "Seattle Seahawks",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000015": {
-      "value": "Jacksonville Jaguars",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000010": {
-      "value": "Denver Broncos",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000014": {
-      "value": "Indianapolis Colts",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000028": {
-      "value": "San Francisco 49ers",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000016": {
-      "value": "Kansas City Chiefs",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000030": {
-      "value": "Tampa Bay Buccaneers",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000026": {
-      "value": "Philadelphia Eagles",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000024": {
-      "value": "New York Giants",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000013": {
-      "value": "Houston Texans",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000027": {
-      "value": "Pittsburgh Steelers",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000017": {
-      "value": "Las Vegas Raiders",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000019": {
-      "value": "Los Angeles Rams",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000004": {
-      "value": "Buffalo Bills",
-      "created": "2025-10-31T05:16:00Z"
-    },
-    "i0000008": {
-      "value": "Cleveland Browns",
       "created": "2025-10-31T05:16:00Z"
     },
     "i0000006": {
       "value": "Chicago Bears",
       "created": "2025-10-31T05:16:00Z"
     },
-    "i0000003": {
-      "value": "Baltimore Ravens",
+    "i0000022": {
+      "value": "New England Patriots",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000012": {
+      "value": "Green Bay Packers",
       "created": "2025-10-31T05:16:00Z"
     },
     "i0000018": {
       "value": "Los Angeles Chargers",
       "created": "2025-10-31T05:16:00Z"
     },
+    "i0000027": {
+      "value": "Pittsburgh Steelers",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000021": {
+      "value": "Minnesota Vikings",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000019": {
+      "value": "Los Angeles Rams",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000010": {
+      "value": "Denver Broncos",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000029": {
+      "value": "Seattle Seahawks",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000017": {
+      "value": "Las Vegas Raiders",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000005": {
+      "value": "Carolina Panthers",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000016": {
+      "value": "Kansas City Chiefs",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000026": {
+      "value": "Philadelphia Eagles",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000002": {
+      "value": "Atlanta Falcons",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000032": {
+      "value": "Washington Commanders",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000003": {
+      "value": "Baltimore Ravens",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000031": {
+      "value": "Tennessee Titans",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000028": {
+      "value": "San Francisco 49ers",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000025": {
+      "value": "New York Jets",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000007": {
+      "value": "Cincinnati Bengals",
+      "created": "2025-10-31T05:16:00Z"
+    },
     "i0000020": {
       "value": "Miami Dolphins",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000001": {
+      "value": "Arizona Cardinals",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000004": {
+      "value": "Buffalo Bills",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000013": {
+      "value": "Houston Texans",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000030": {
+      "value": "Tampa Bay Buccaneers",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000014": {
+      "value": "Indianapolis Colts",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000024": {
+      "value": "New York Giants",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000009": {
+      "value": "Dallas Cowboys",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000015": {
+      "value": "Jacksonville Jaguars",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000023": {
+      "value": "New Orleans Saints",
+      "created": "2025-10-31T05:16:00Z"
+    },
+    "i0000008": {
+      "value": "Cleveland Browns",
       "created": "2025-10-31T05:16:00Z"
     }
   },
@@ -151,7 +151,7 @@
         "id": "saskzun3",
         "created": "2025-10-31T05:24:47.759231390Z",
         "last_updated": "2025-10-31T05:24:47.759231390Z",
-        "status": "in_progress",
+        "status": "completed",
         "comparisons": []
       },
       "result": {
@@ -199,7 +199,7 @@
         "id": "scm4sp78",
         "created": "2025-10-31T16:22:02.401834293Z",
         "last_updated": "2025-10-31T16:22:02.401834293Z",
-        "status": "in_progress",
+        "status": "completed",
         "comparisons": []
       },
       "result": {
@@ -238,6 +238,73 @@
           "i0000006"
         ],
         "ratings": null
+      }
+    },
+    {
+      "user_id": "u226aqkz",
+      "strategy": "merge",
+      "session": {
+        "id": "sw3q9ru1",
+        "created": "2025-10-31T16:26:14.473415892Z",
+        "last_updated": "2025-10-31T16:32:01.222071803Z",
+        "completed": "2025-10-31T16:32:01.222071803Z",
+        "status": "completed",
+        "comparisons": []
+      },
+      "result": {
+        "order": [
+          "i0000029",
+          "i0000010",
+          "i0000021",
+          "i0000012",
+          "i0000011",
+          "i0000009",
+          "i0000015",
+          "i0000004",
+          "i0000027",
+          "i0000020",
+          "i0000030",
+          "i0000026",
+          "i0000014",
+          "i0000024",
+          "i0000019",
+          "i0000023",
+          "i0000001",
+          "i0000028",
+          "i0000025",
+          "i0000018",
+          "i0000032",
+          "i0000007",
+          "i0000002",
+          "i0000022",
+          "i0000008",
+          "i0000017",
+          "i0000013",
+          "i0000003",
+          "i0000005",
+          "i0000031",
+          "i0000016",
+          "i0000006"
+        ],
+        "ratings": null
+      }
+    },
+    {
+      "user_id": "u226aqkz",
+      "strategy": "merge",
+      "session": {
+        "id": "s34t0qyk",
+        "created": "2025-10-31T16:52:11.191512748Z",
+        "last_updated": "2025-10-31T16:52:20.202707006Z",
+        "status": "in_progress",
+        "comparisons": [
+          {
+            "a": "i0000011",
+            "b": "i0000006",
+            "winner": "i0000011",
+            "timestamp": "2025-10-31T16:52:20.202702343Z"
+          }
+        ]
       }
     }
   ]
