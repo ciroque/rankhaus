@@ -1,6 +1,7 @@
 use anyhow::{bail, Context, Result};
 use crate::state::AppState;
 use crate::SessionsCommands;
+use rankhaus::session::SessionStatus;
 
 pub fn execute(command: SessionsCommands, state: Option<&mut AppState>) -> Result<()> {
     // Check if list is loaded
@@ -41,10 +42,10 @@ fn list(state: Option<&mut AppState>) -> Result<()> {
             .map(|u| u.username.as_str())
             .unwrap_or("unknown");
         
-        let status = if ranking.is_complete() {
-            "complete"
-        } else {
-            "incomplete"
+        let status = match ranking.session.info.status {
+            SessionStatus::InProgress => "in_progress",
+            SessionStatus::Completed => "completed",
+            SessionStatus::Abandoned => "abandoned",
         };
         
         let created = ranking.session.info.created.format("%Y-%m-%d %H:%M").to_string();
