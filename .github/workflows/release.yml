@@ -126,24 +126,24 @@ jobs:
           asset_name: ${{ matrix.asset_name }}.tar.gz.sha256
           asset_content_type: text/plain
       
-      - name: Upload release asset (Windows)
-        if: matrix.os == 'windows-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./target/${{ matrix.target }}/release/${{ matrix.asset_name }}.zip
-          asset_name: ${{ matrix.asset_name }}.zip
-          asset_content_type: application/zip
-      
-      - name: Upload checksum (Windows)
-        if: matrix.os == 'windows-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./target/${{ matrix.target }}/release/${{ matrix.asset_name }}.zip.sha256
-          asset_name: ${{ matrix.asset_name }}.zip.sha256
-          asset_content_type: text/plain
+#      - name: Upload release asset (Windows)
+#        if: matrix.os == 'windows-latest'
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ needs.create-release.outputs.upload_url }}
+#          asset_path: ./target/${{ matrix.target }}/release/${{ matrix.asset_name }}.zip
+#          asset_name: ${{ matrix.asset_name }}.zip
+#          asset_content_type: application/zip
+#
+#      - name: Upload checksum (Windows)
+#        if: matrix.os == 'windows-latest'
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ needs.create-release.outputs.upload_url }}
+#          asset_path: ./target/${{ matrix.target }}/release/${{ matrix.asset_name }}.zip.sha256
+#          asset_name: ${{ matrix.asset_name }}.zip.sha256
+#          asset_content_type: text/plain
