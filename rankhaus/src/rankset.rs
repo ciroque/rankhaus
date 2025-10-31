@@ -4,9 +4,9 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-/// Metadata about a ranking list
+/// Metadata about a ranking set
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct ListMeta {
+pub struct RankSetMeta {
     pub name: String,
     #[serde(rename = "type")]
     pub list_type: String,
@@ -15,10 +15,10 @@ pub struct ListMeta {
     pub created: DateTime<Utc>,
 }
 
-/// A complete ranking list with items, users, and rankings
+/// A complete ranking set with items, users, and rankings
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct List {
-    pub meta: ListMeta,
+pub struct RankSet {
+    pub meta: RankSetMeta,
     pub users: HashMap<String, User>,
     pub items: HashMap<String, Item>,
     pub rankings: Vec<Ranking>,
@@ -27,13 +27,13 @@ pub struct List {
     pub file_path: Option<PathBuf>,
 }
 
-impl List {
-    /// Create a new empty list
+impl RankSet {
+    /// Create a new empty rank set
     pub fn new(name: String, author: String, description: String) -> Self {
         Self {
-            meta: ListMeta {
+            meta: RankSetMeta {
                 name,
-                list_type: "list".to_string(),
+                list_type: "rankset".to_string(),
                 author,
                 description,
                 created: Utc::now(),
@@ -45,15 +45,15 @@ impl List {
         }
     }
     
-    /// Load a list from a JSON file
+    /// Load a rank set from a JSON file
     pub fn load<P: AsRef<Path>>(path: P) -> Result<Self> {
         let content = std::fs::read_to_string(&path)?;
-        let mut list: List = serde_json::from_str(&content)?;
-        list.file_path = Some(path.as_ref().to_path_buf());
-        Ok(list)
+        let mut rankset: RankSet = serde_json::from_str(&content)?;
+        rankset.file_path = Some(path.as_ref().to_path_buf());
+        Ok(rankset)
     }
     
-    /// Save the list to its file path
+    /// Save the rank set to its file path
     pub fn save(&self) -> Result<()> {
         if let Some(path) = &self.file_path {
             self.save_to(path)
@@ -62,14 +62,14 @@ impl List {
         }
     }
     
-    /// Save the list to a specific path
+    /// Save the rank set to a specific path
     pub fn save_to<P: AsRef<Path>>(&self, path: P) -> Result<()> {
         let content = serde_json::to_string_pretty(self)?;
         std::fs::write(path, content)?;
         Ok(())
     }
     
-    /// Add a user to the list
+    /// Add a user to the rank set
     pub fn add_user(&mut self, user: User) -> Result<()> {
         let id = user.id.to_string();
         if self.users.contains_key(&id) {
@@ -131,7 +131,7 @@ impl List {
         Ok(())
     }
     
-    /// Add an item to the list
+    /// Add an item to the rank set
     pub fn add_item(&mut self, item: Item) -> Result<()> {
         let id = item.id.to_string();
         if self.items.contains_key(&id) {
@@ -186,38 +186,149 @@ mod tests {
     use super::*;
     
     #[test]
-    fn test_list_creation() {
-        let list = List::new(
+    fn test_rankset_creation() {
+        let rankset = RankSet::new(
             "test".to_string(),
             "author".to_string(),
             "description".to_string(),
         );
-        assert_eq!(list.meta.name, "test");
-        assert_eq!(list.users.len(), 0);
-        assert_eq!(list.items.len(), 0);
+        assert_eq!(rankset.meta.name, "test");
+        assert_eq!(rankset.users.len(), 0);
+        assert_eq!(rankset.items.len(), 0);
     }
     
     #[test]
     fn test_add_user() {
-        let mut list = List::new(
+        let mut rankset = RankSet::new(
             "test".to_string(),
             "author".to_string(),
             "description".to_string(),
         );
         let user = User::new("alice".to_string(), None);
-        list.add_user(user).unwrap();
-        assert_eq!(list.users.len(), 1);
+        rankset.add_user(user).unwrap();
+        assert_eq!(rankset.users.len(), 1);
     }
     
     #[test]
     fn test_add_item() {
-        let mut list = List::new(
+        let mut rankset = RankSet::new(
             "test".to_string(),
             "author".to_string(),
             "description".to_string(),
         );
         let item = Item::new("blue".to_string());
-        list.add_item(item).unwrap();
-        assert_eq!(list.items.len(), 1);
+        rankset.add_item(item).unwrap();
+        assert_eq!(rankset.items.len(), 1);
+    }
+    
+    #[test]
+    fn test_get_user_by_id() {
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let user = User::new("alice".to_string(), None);
+        let user_id = user.id.to_string();
+        rankset.add_user(user).unwrap();
+        
+        let found = rankset.get_user(&user_id).unwrap();
+        assert_eq!(found.username, "alice");
+    }
+    
+    #[test]
+    fn test_get_user_by_username() {
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let user = User::new("alice".to_string(), None);
+        rankset.add_user(user).unwrap();
+        
+        let found = rankset.get_user("alice").unwrap();
+        assert_eq!(found.username, "alice");
+    }
+    
+    #[test]
+    fn test_get_user_not_found() {
+        let rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let result = rankset.get_user("nonexistent");
+        assert!(result.is_err());
+    }
+    
+    #[test]
+    fn test_get_item_by_id() {
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let item = Item::new("blue".to_string());
+        let item_id = item.id.to_string();
+        rankset.add_item(item).unwrap();
+        
+        let found = rankset.get_item(&item_id).unwrap();
+        assert_eq!(found.value, "blue");
+    }
+    
+    #[test]
+    fn test_get_item_by_value() {
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let item = Item::new("blue".to_string());
+        rankset.add_item(item).unwrap();
+        
+        let found = rankset.get_item("blue").unwrap();
+        assert_eq!(found.value, "blue");
+    }
+    
+    #[test]
+    fn test_get_item_not_found() {
+        let rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let result = rankset.get_item("nonexistent");
+        assert!(result.is_err());
+    }
+    
+    #[test]
+    fn test_remove_item() {
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let item = Item::new("blue".to_string());
+        rankset.add_item(item).unwrap();
+        assert_eq!(rankset.items.len(), 1);
+        
+        rankset.remove_item("blue").unwrap();
+        assert_eq!(rankset.items.len(), 0);
+    }
+    
+    #[test]
+    fn test_duplicate_item() {
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let item1 = Item::new("blue".to_string());
+        let id = item1.id.clone();
+        rankset.add_item(item1).unwrap();
+        
+        let item2 = Item::with_id(id, "blue".to_string(), Utc::now());
+        let result = rankset.add_item(item2);
+        assert!(result.is_err());
+    }
+    
+    #[test]
+    fn test_duplicate_user() {
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        let user1 = User::new("alice".to_string(), None);
+        let id = user1.id.clone();
+        rankset.add_user(user1).unwrap();
+        
+        let user2 = User::with_id(id, "alice".to_string(), None);
+        let result = rankset.add_user(user2);
+        assert!(result.is_err());
+    }
+    
+    #[test]
+    fn test_save_and_load() {
+        use std::fs;
+        
+        let mut rankset = RankSet::new("test".to_string(), "author".to_string(), "desc".to_string());
+        rankset.add_item(Item::new("blue".to_string())).unwrap();
+        rankset.add_user(User::new("alice".to_string(), None)).unwrap();
+        
+        let path = "test_save_load.rankhaus.json";
+        rankset.file_path = Some(path.into());
+        rankset.save().unwrap();
+        
+        let loaded = RankSet::load(path).unwrap();
+        assert_eq!(loaded.meta.name, "test");
+        assert_eq!(loaded.items.len(), 1);
+        assert_eq!(loaded.users.len(), 1);
+        
+        fs::remove_file(path).unwrap();
     }
 }

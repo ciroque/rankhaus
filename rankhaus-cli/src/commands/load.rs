@@ -1,9 +1,9 @@
 use anyhow::{Context, Result};
 use crate::state::AppState;
-use rankhaus::List;
+use rankhaus::RankSet;
 
 pub fn execute(file: String, state: Option<&mut AppState>) -> Result<()> {
-    let list = List::load(&file)
+    let list = RankSet::load(&file)
         .context(format!("Failed to load list from {}", file))?;
     
     println!("✓ Loaded: {}", list.meta.name);
@@ -13,8 +13,8 @@ pub fn execute(file: String, state: Option<&mut AppState>) -> Result<()> {
     
     // Store in state if in REPL mode
     if let Some(state) = state {
-        state.list = Some(list);
-        println!("✓ List loaded into session");
+        state.rankset = Some(list);
+        println!("✓ RankSet loaded into session");
     }
     
     Ok(())

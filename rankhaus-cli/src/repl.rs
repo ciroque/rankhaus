@@ -31,7 +31,7 @@ pub fn run() -> Result<()> {
         
         // Handle exit
         if input == "exit" || input == "quit" {
-            if state.has_list() {
+            if state.has_rankset() {
                 println!("Saving...");
                 if let Err(e) = state.save() {
                     eprintln!("Warning: Failed to save: {}", e);
@@ -89,17 +89,17 @@ fn print_help() {
     println!();
     println!("  init <name>              Initialize a new ranking list");
     println!("  load <file>              Load an existing list");
-    println!("  items list               List all items");
+    println!("  items list               RankSet all items");
     println!("  items add                Add items from stdin");
     println!("  items remove             Remove items");
     println!("  items edit <id> <value>  Edit an item");
-    println!("  users list               List all users");
+    println!("  users list               RankSet all users");
     println!("  users add <username>     Add a new user");
     println!("  users select <username>  Select active user");
-    println!("  strategies list          List available strategies");
+    println!("  strategies list          RankSet available strategies");
     println!("  strategies select <name> Select a strategy");
     println!("  rank                     Start ranking");
-    println!("  sessions list            List all sessions");
+    println!("  sessions list            RankSet all sessions");
     println!("  help                     Show this help");
     println!("  exit                     Exit REPL");
     println!();

@@ -4,8 +4,8 @@ use crate::UsersCommands;
 
 pub fn execute(command: UsersCommands, state: Option<&mut AppState>) -> Result<()> {
     // Check if list is loaded
-    let has_list = state.as_ref().map(|s| s.has_list()).unwrap_or(false);
-    if !has_list {
+    let has_rankset = state.as_ref().map(|s| s.has_rankset()).unwrap_or(false);
+    if !has_rankset {
         bail!("No list loaded. Use 'init <name>' or 'load <file>' first.");
     }
     

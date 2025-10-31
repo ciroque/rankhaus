@@ -1,6 +1,6 @@
 use anyhow::{Context, Result};
 use crate::state::AppState;
-use rankhaus::{List, User};
+use rankhaus::{RankSet, User};
 use std::path::PathBuf;
 
 pub fn execute(
@@ -38,7 +38,7 @@ pub fn execute(
     // Create the list
     let list_author = author.unwrap_or_else(|| username.clone());
     let list_description = description.unwrap_or_else(|| format!("Ranking list: {}", name));
-    let mut list = List::new(name.clone(), list_author, list_description);
+    let mut list = RankSet::new(name.clone(), list_author, list_description);
     
     // Add the initial user
     let user = User::new(username.clone(), user_display_name);
@@ -57,9 +57,9 @@ pub fn execute(
     
     // If in REPL mode, load the list into state
     if let Some(state) = state {
-        state.list = Some(list);
+        state.rankset = Some(list);
         state.active_user_id = Some(user_id.into());
-        println!("✓ List loaded into session");
+        println!("✓ RankSet loaded into session");
     } else {
         println!("\nNext steps:");
         println!("  rankhaus load {}      # Load the list", filename);
