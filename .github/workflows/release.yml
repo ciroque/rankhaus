@@ -19,6 +19,8 @@ jobs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
       version: ${{ steps.get_version.outputs.version }}
     steps:
+      - uses: actions/checkout@v4
+      
       - name: Get version from tag
         id: get_version
         run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
@@ -96,8 +98,12 @@ jobs:
       - name: Create archive (Unix)
         if: matrix.os != 'windows-latest'
         run: |
-          cd target/${{ matrix.target }}/release
-          tar czf ${{ matrix.asset_name }}.tar.gz ${{ matrix.artifact_name }}
+          mkdir -p dist
+          cp target/${{ matrix.target }}/release/${{ matrix.artifact_name }} dist/
+          cp -r ranksets dist/
+          cd dist
+          tar czf ../${{ matrix.asset_name }}.tar.gz ${{ matrix.artifact_name }} ranksets/
+          cd ..
           shasum -a 256 ${{ matrix.asset_name }}.tar.gz > ${{ matrix.asset_name }}.tar.gz.sha256
       
       - name: Create archive (Windows)
@@ -114,7 +120,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./target/${{ matrix.target }}/release/${{ matrix.asset_name }}.tar.gz
+          asset_path: ./${{ matrix.asset_name }}.tar.gz
           asset_name: ${{ matrix.asset_name }}.tar.gz
           asset_content_type: application/gzip
       
@@ -125,28 +131,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./target/${{ matrix.target }}/release/${{ matrix.asset_name }}.tar.gz.sha256
+          asset_path: ./${{ matrix.asset_name }}.tar.gz.sha256
           asset_name: ${{ matrix.asset_name }}.tar.gz.sha256
           asset_content_type: text/plain
-      
-#      - name: Upload release asset (Windows)
-#        if: matrix.os == 'windows-latest'
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ needs.create-release.outputs.upload_url }}
-#          asset_path: ./target/${{ matrix.target }}/release/${{ matrix.asset_name }}.zip
-#          asset_name: ${{ matrix.asset_name }}.zip
-#          asset_content_type: application/zip
-#
-#      - name: Upload checksum (Windows)
-#        if: matrix.os == 'windows-latest'
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ needs.create-release.outputs.upload_url }}
-#          asset_path: ./target/${{ matrix.target }}/release/${{ matrix.asset_name }}.zip.sha256
-#          asset_name: ${{ matrix.asset_name }}.zip.sha256
-#          asset_content_type: text/plain
